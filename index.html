@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>Whack A Mole</title>
+        <!-- KaTeX CSS 파일 추가 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.css">
+
+        <!-- KaTeX JavaScript 파일 추가 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.js"></script>
+        <script>
+            window.WebFontConfig = {
+                custom: {
+                    families: ['KaTeX_AMS', 'KaTeX_Caligraphic:n4,n7', 'KaTeX_Fraktur:n4,n7',
+                    'KaTeX_Main:n4,n7,i4,i7', 'KaTeX_Math:i4,i7', 'KaTeX_Script',
+                    'KaTeX_SansSerif:n4,n7,i4', 'KaTeX_Size1', 'KaTeX_Size2', 'KaTeX_Size3',
+                    'KaTeX_Size4', 'KaTeX_Typewriter'],
+                },
+            };
+        </script>
+        <script defer src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script>
+        
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="pb_board">
+                <div id="problem"><b>PROBLEM</b></div>
+            </div>
+            <div class="board">
+                <div class="MOLE">
+                    <div class="hole">
+                        <div class="hole-in"></div>
+                        <div class="hole-top"></div>
+                        <div class="mole"></div>
+                        <div class="hole-bottom"></div>
+                    </div>
+
+                </div>
+                <div class="MOLE">
+                    <div class="hole">
+                        <div class="hole-in"></div>
+                        <div class="hole-top"></div>
+                        <div class="mole"></div>
+                        <div class="hole-bottom"></div>
+                    </div>
+
+                </div>
+                <div class="MOLE">
+                    <div class="hole">
+                        <div class="hole-in"></div>
+                        <div class="hole-top"></div>
+                        <div class="mole"></div>
+                        <div class="hole-bottom"></div>
+                    </div>
+
+                </div>
+                <div class="MOLE">
+                    <div class="hole">
+                        <div class="hole-in"></div>
+                        <div class="hole-top"></div>
+                        <div class="mole"></div>
+                        <div class="hole-bottom"></div>
+                    </div>
+
+                </div>
+                <div class="MOLE">
+                    <div class="hole">
+                        <div class="hole-in"></div>
+                        <div class="hole-top"></div>
+                        <div class="mole"></div>
+                        <div class="hole-bottom"></div>
+                    </div>
+
+                </div>
+                <div class="MOLE">
+                    <div class="hole">
+                        <div class="hole-in"></div>
+                        <div class="hole-top"></div>
+                        <div class="mole"></div>
+                        <div class="hole-bottom"></div>
+                    </div>
+
+                </div>
+                <div class="MOLE">
+                    <div class="hole">
+                        <div class="hole-in"></div>
+                        <div class="hole-top"></div>
+                        <div class="mole"></div>
+                        <div class="hole-bottom"></div>
+                    </div>
+
+                </div>
+                <div class="MOLE">
+                    <div class="hole">
+                        <div class="hole-in"></div>
+                        <div class="hole-top"></div>
+                        <div class="mole"></div>
+                        <div class="hole-bottom"></div>
+                    </div>
+
+                </div>
+                <div class="MOLE">
+                    <div class="hole">
+                        <div class="hole-in"></div>
+                        <div class="hole-top"></div>
+                        <div class="mole"></div>
+                        <div class="hole-bottom"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="score"><b>SCORE: <span>00</span></b></div>
+            <div class="timer"><b>TIME : <span>60</span></b></div>
+        
+        </div>
+        <div id="modal" class="modal-overlay">
+            <div class="modal-window">
+                <div id="game-setting">
+                    <div class="title">
+                        <h2>Math Game</h2>
+                    </div>
+                    <div class="content">
+                        <p>
+                            <span>학번을 입력해주세요</span>
+                            <span id="submit-schoolnumber_check">✅</span>
+                        </p>
+                        <p>
+                            <span id="submit-schoolnumber">학번 : 11111</span>
+                        </p>
+                        <p>
+                            <input type="number" id="school_number" inputmode="numeric" onkeypress="school_number(event)"/>
+                            <input type="button" value="확인" onclick="click2start()" >
+                        </p>
+                        <p>
+                            <span>게임 유형을 골라주세요</span>
+                            <span id="submit-category_check">✅</span>
+                        </p>
+                        <p>
+                            <span id="submit-category">선택한 유형 : 수열</span>
+                        </p>
+                        <p>
+                            <input type="button" value="지수" onclick="set_category(value)" >
+                            <input type="button" value="로그" onclick="set_category(value)" >
+                            <input type="button" value="수열" onclick="set_category(value)" >
+                        </p>
+
+                        <input type="button" id="start-img-button" onclick="game_start()">
+                        
+
+                    </div>
+                </div>
+                <div id="start-page">
+                    <div class="title">
+                        <h1>Math Game</h1>
+                    </div>
+                    <div class="content">
+                        <p class="button">
+                            <input type="button" class="setting-start-img-button" onclick="setting_game()">
+                        </p>
+                        <p class="button-2">
+                            <input type="button" class="gamerule-img-button" onclick="gamerule()">
+                        </p>
+                    </div>
+                </div>
+                <div id="gameover">
+                    <div class="title">
+                        <h1>Math Game</h1>
+                    </div>
+                    <div class="content">
+                        <p>
+                            <div class="final-score"><h2><b>Your Score : <span>00</span></b></h2></div>
+                        </p>
+                        <p class="button">
+                            <input type="button" class="re-img-button" onclick="retry_game()">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cursor"></div>
+        <script src="./main.js"></script>
+    </body>
+</html>

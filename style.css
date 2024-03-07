@@ -1,0 +1,575 @@
+/*https://codingeverybody.kr/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A1%9C-css-%EB%B3%80%EC%88%98-%EC%A0%9C%EC%96%B4%ED%95%98%EA%B8%B0-%EC%A0%91%EA%B7%BC%EA%B3%BC-%EC%84%A4%EC%A0%95-%EB%B0%A9%EB%B2%95/*/
+/*
+animation : https://coding-levup.tistory.com/20
+*/
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(129,193,71);
+    color: #fff;
+    user-select: none;
+    cursor : none;
+    
+
+}
+
+.container{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* or stretch*/
+    overflow: hidden;
+}
+
+.pb_board{
+    position: absolute;
+    height: 150px;
+    width: 90vw;
+    background-image: url("./image/board.png");
+    background-size: 100% 100%;
+    transform: translateY(50%);
+}
+/*
+max : width 가 value보다 작을때 실행
+min : width 가 value 보다 클때 실행
+translate : 사진 크기의 비율 만큼 이동
+left : 실제 이동 값
+*/
+@media (min-width : 500px){ 
+    .pb_board{
+        position: absolute;
+        height: 150px;
+        width: 500px;
+        background-image: url("./image/board.png");
+        background-size: 100% 100%;
+    }
+
+}
+
+#problem{
+    pointer-events: none;
+    text-align: center;
+    color:black;
+    font-size:100%;
+    transform: translateY(40px);
+}
+
+.board{
+    position: absolute;
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 30px;
+
+    width: 85vw;
+    height: 85vw;
+
+    transform: translateY(50%) translateY(170px);
+}
+
+@media (min-width : 500px){ 
+    .board{
+        position: absolute;
+        display: grid;
+        margin: 0 auto;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 50px;
+
+        width: 500px;
+        height: 500px;
+
+        
+        transform: translateY(50%) translateY(170px);
+    }
+
+}
+
+
+
+.hole{ /* unset 는 부모의 상속*/
+    width: 100%;
+    height: 100%;
+    position: relative;
+    
+}
+.hole-in{ /* unset 는 부모의 상속*/
+    width: 86%;
+    height: 34%;
+    position: absolute;
+    background-image: url("./image/hole_in.png");
+    background-size: 100% 100%;
+    transform: translateX(7%) translateY(134%); /* translate 는 전체 사이즈 기준 퍼센트*/
+    
+}
+.hole-top{ /* unset 는 부모의 상속*/
+    width: 100%;
+    height: 62%;
+    position: absolute;
+    background-image: url("./image/hide_up.png");
+    background-size: 100% 100%;
+    top:0%;
+}
+.hole-bottom{ /* unset 는 부모의 상속*/
+    width: 100%;
+    height: 62%;
+    pointer-events: none;
+    position: absolute;
+    background-image: url("./image/hide_down.png");
+    background-size: 100% 100%;
+    top: 62%;
+}
+
+.mole{
+    width: 71%;
+    height: 71%;
+
+    left:14.5%;
+
+    font-size: 100%;
+    font-weight: bold;
+    color: black;
+
+    transform: translateY(60%);
+
+    position: absolute;
+
+}
+
+.mole .text-rise{
+    width: 100%;
+    height: 50%;
+
+    pointer-events: none;
+
+
+    position: absolute;
+    text-align: center;
+    transform: translateY(110%);
+
+    animation-name: text-rise;
+    animation-duration: .8s;
+    animation-fill-mode: forwards;
+
+    font-size: .7em;
+    
+}
+
+@media(min-width : 500px){
+    .mole .text-rise{
+        width: 100%;
+        height: 50%;
+    
+        pointer-events: none;
+    
+    
+        position: absolute;
+        text-align: center;
+        transform: translateY(110%);
+    
+        animation-name: text-rise;
+        animation-duration: .8s;
+        animation-fill-mode: forwards;
+    
+        font-size: 1em;
+        
+    }
+}
+
+.mole .mole-rise{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    animation-name: rise;
+    animation-duration: .8s;
+    animation-fill-mode: forwards;
+
+}
+
+
+.mole .mole-down{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    animation-name: down;
+    animation-duration: .8s;
+    animation-fill-mode: forwards;
+
+}
+
+.mole .text-down{
+    width: 100%;
+    height: 50%;
+
+    pointer-events: none;
+
+    position: absolute;
+    text-align: center;
+    transform: translateY(110%);
+
+    animation-name: text-down;
+    animation-duration: .8s;
+    animation-fill-mode: forwards;
+
+    font-size: .7em;
+
+}
+
+@media(min-width : 500px){
+    .mole .text-down{
+        width: 100%;
+        height: 50%;
+    
+        pointer-events: none;
+    
+        position: absolute;
+        text-align: center;
+        transform: translateY(110%);
+    
+        animation-name: text-down;
+        animation-duration: .8s;
+        animation-fill-mode: forwards;
+    
+        font-size: 1em;
+    
+    }
+}
+
+
+@keyframes rise { /* -% : 위로. +% : 아래로*/
+    0%{
+        transform: translateX(0%) translateY(0%);
+    }
+    100%{
+        transform: translateX(0%) translateY(-47%);
+    }
+}
+
+@keyframes down { /* -% : 위로. +% : 아래로*/
+    0%{
+        transform: translateX(0%) translateY(-47%);
+    }
+    100%{
+        transform: translateX(0%) translateY(0%);
+    }
+}
+
+@keyframes text-rise { /* -% : 위로. +% : 아래로*/
+    0%{
+        transform: translateX(0%) translateY(110%);
+    }
+    100%{
+        transform: translateX(0%) translateY(20%);
+    }
+}
+
+@keyframes text-down { /* -% : 위로. +% : 아래로*/
+    0%{
+        transform: translateX(0%) translateY(20%);
+    }
+    100%{
+        transform: translateX(0%) translateY(110%);
+    }
+}
+
+.score{
+    pointer-events: none;
+    text-align: left;
+    position: absolute;
+    transform: translateY(50%) translateY(170px) translateY(85vw);
+    font-size: 1.5em;
+    color: black;
+}
+
+@media(min-width : 500px){
+    .score{
+        pointer-events: none;
+        text-align: left;
+        position: absolute;
+        transform: translateY(50%) translateY(170px) translateY(500px);
+        font-size: 1.5em;
+        color: black;
+    }
+
+}
+
+.timer{
+    pointer-events: none;
+    position: absolute;
+    transform: translateY(50%) translateY(170px) translateY(85vw) translateY(30px);
+    font-size: 1.5em;
+    color:black
+    
+}
+
+@media(min-width : 500px){
+    .timer{
+        pointer-events: none;
+        position: absolute;
+        transform: translateY(50%) translateY(170px) translateY(500px) translateY(30px);
+        font-size: 1.5em;
+        color:black
+    }
+
+}
+
+.cursor{
+    height: 10%; /* 높이 */
+    width: 10%; /* 너비 */
+    position: absolute;
+    background-image: url('./image/hammer.png');
+    background-size: 100% 100%;
+    transition: background-image .3s ease-out;
+    pointer-events: none;
+    
+}
+
+@media(min-width : 500px){
+    .cursor{
+        height: 100px; /* 높이 */
+        width: 100px; /* 너비 */
+        position: absolute;
+        background-image: url('./image/hammer.png');
+        background-size: 100% 100%;
+        transition: background-image .3s ease-out;
+        pointer-events: none;
+    }
+
+}
+
+
+
+.cursor.active{
+    animation-name: hammer_crash;
+    animation-duration: .3s;
+
+}
+
+.cursor.active-touch{
+    animation-name: hammer_crash_touch;
+    animation-duration: .3s;
+
+}
+
+@keyframes hammer_crash {
+    0%{
+        background-image: url('./image/hammer_crash.png');
+    }
+    100%{
+        background-image: url('./image/hammer.png');
+    }
+}
+
+@keyframes hammer_crash_touch {
+    0%{
+        background-image: url('./image/hammer.png');
+    }
+    100%{
+        background-image: url('./image/hammer_crash.png');
+    }
+}
+
+
+#modal.modal-overlay { /* 뒤에 흐릿한 부분 */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(121, 115, 115, 0.543);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+@media(min-width : 550px){
+    #modal.modal-overlay { /* 뒤에 흐릿한 부분 */
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(121, 115, 115, 0.543);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+}
+
+#game-setting{
+    display: none;
+}
+#start-page{
+    display: inline;
+}
+#gameover{
+    display: none;
+}
+
+.button{
+    transform: translateY(15vh);
+}
+.button-2{
+    transform: translateY(6vh);
+}
+@media(min-width : 550px){
+    #modal.modal-overlay { /* 뒤에 흐릿한 부분 */
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(121, 115, 115, 0.543);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+}
+
+input#start-img-button{
+    display: none;
+    background: url('./image/start.png') no-repeat;
+    background-size: 100%, 60%;
+    border: none;
+    width: 100px;
+    height: 60px;
+}
+
+input.setting-start-img-button{
+    background: url('./image/gamestart_mole_before.png') no-repeat;
+    background-size: 100%, 60%;
+    border: none;
+    width: 240px;
+    height: 144px;
+}
+input.setting-start-img-button:hover{
+    animation-name: gamestart_bar_mole_rise;
+    animation-duration: .3s;
+    animation-fill-mode: forwards;
+    
+}
+@keyframes gamestart_bar_mole_rise {
+    0%{
+        background-image: url('./image/gamestart_mole_before.png');
+    }
+    20%{
+        background-image: url('./image/gamestart_mole_before-1.png');
+    }
+    40%{
+        background-image: url('./image/gamestart_mole_before-2.png');
+    }
+    60%{
+        background-image: url('./image/gamestart_mole_before-3.png');
+    }
+    80%{
+        background-image: url('./image/gamestart_mole_before-4.png');
+    }
+    100%{
+        background-image: url('./image/gamestart_mole.png');
+    }
+}
+
+
+input.gamerule-img-button{
+    background: url('./image/gamerule_new.png') no-repeat;
+    background-size: 100%, 60%;
+    border: none;
+    width: 240px;
+    height: 144px;
+}
+input.re-img-button{
+    background: url('./image/re.png') no-repeat;
+    background-size: 100%, 50%;
+    border: none;
+    width: 100px;
+    height: 50px;
+}
+
+
+#modal .modal-window {
+    background: rgba( 69, 139, 197, 0.70 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 13.5px );
+    -webkit-backdrop-filter: blur( 13.5px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    width: 90vw;
+    height: 500px;
+    position: relative;
+    padding: 1.25vw;
+    text-align: center;
+
+}
+
+@media(min-width : 550px){
+    #modal .modal-window {
+        background: rgba( 69, 139, 197, 0.70 );
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur( 13.5px );
+        -webkit-backdrop-filter: blur( 13.5px );
+        border-radius: 10px;
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
+        width: 400px;
+        height: 500px;
+        position: relative;
+        top: -100px;
+        padding: 10px;
+        text-align: center;
+        
+    }
+
+}
+
+
+#modal .title {
+    padding-left: 10px;
+    display: inline;
+    text-shadow: 1px 1px 2px gray;
+    color: white;
+    
+}
+#modal .title h2 {
+    display: inline;
+}
+#modal .close-area {
+    display: inline;
+    float: right;
+    padding-right: 10px;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px gray;
+    color: white;
+}
+
+#modal .content {
+    margin-top: 20px;
+    padding: 0px 10px;
+    text-shadow: 1px 1px 2px gray;
+    color: white;
+}
+
+#submit-schoolnumber,#submit-schoolnumber_check{
+    display: none;
+}
+#submit-category,#submit-category_check{
+    display: none;
+}
