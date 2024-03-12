@@ -545,6 +545,9 @@ function new_pb(){
         }else if(rdm==2){
             let a=rand(-5,5)
             let b=rand(0,5)
+            if(a==0 && b==0){
+                b=1
+            }
             if(a>0){
                 problem="{"+(a)+"}^{"+(b)+"} = ?"
             }else{
