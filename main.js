@@ -453,7 +453,7 @@ function new_pb(){
             problem_score=[1,-1]
         }else if(rdm==2){
             let a= rand(2,5)
-            let k = rand(0,3)
+            let k = rand(1,4)
             let value = rand(1,3)
             let B = rand(-3,3)
             if(value==1){
