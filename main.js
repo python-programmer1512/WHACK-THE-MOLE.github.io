@@ -796,7 +796,7 @@ function run(i){
                 if(mole_ans[i]===answer){
                     score += problem_score[0]
                     correct_pb_cnt++
-                    record_style["user_answers"]+="c" // correct
+                    record_style["user_answers"]+=",ac" // correct
                     game_record.push(record_style)
                     correct.play()
                     record_style={
@@ -814,7 +814,7 @@ function run(i){
                     pb_wrong_ans++
                     record_style["user_answers"]+=String(mole_ans[i])+","
                     if(pb_wrong_ans>=pb_wrong_answer_tiems+1){
-                        record_style["user_answers"]+="w" // wrong
+                        record_style["user_answers"]+="wa" // wrong
                         game_record.push(record_style)
                         record_style={
                             "category":"",
