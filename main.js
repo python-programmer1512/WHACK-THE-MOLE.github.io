@@ -796,7 +796,7 @@ function run(i){
                 if(mole_ans[i]===answer){
                     score += problem_score[0]
                     correct_pb_cnt++
-                    record_style["user_answers"]+=",ac" // correct
+                    record_style["user_answers"]+="ac" // correct
                     game_record.push(record_style)
                     correct.play()
                     record_style={
