@@ -33,6 +33,8 @@ let game_play_time = 60
 let problem_score=[0,0]
 let game_record = []
 let params={}
+let pb_wrong_ans=0
+let pb_wrong_answer_tiems=3
 let record_style={
     "category":"",
     "problem":"",
@@ -794,7 +796,7 @@ function run(i){
                 if(mole_ans[i]===answer){
                     score += problem_score[0]
                     correct_pb_cnt++
-                    record_style["user_answers"]+=String(mole_ans[i])
+                    record_style["user_answers"]+="c" // correct
                     game_record.push(record_style)
                     correct.play()
                     record_style={
@@ -803,12 +805,27 @@ function run(i){
                         "problem_answer":"",
                         "user_answers":""
                     }
+                    pb_wrong_ans=0
                     new_pb()
                     update_percent(answer)
                 }else {
                     score += problem_score[1]
                     wrong_pb_cnt++
+                    pb_wrong_ans++
                     record_style["user_answers"]+=String(mole_ans[i])+","
+                    if(pb_wrong_ans>=pb_wrong_answer_tiems+1){
+                        record_style["user_answers"]+="w" // wrong
+                        game_record.push(record_style)
+                        record_style={
+                            "category":"",
+                            "problem":"",
+                            "problem_answer":"",
+                            "user_answers":""
+                        }
+                        pb_wrong_ans=0
+                        new_pb()
+                        update_percent(answer)
+                    }
                 }
                 scoreEl.textContent = score
                 clearTimeout(timer)
