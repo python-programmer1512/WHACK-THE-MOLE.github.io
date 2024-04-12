@@ -452,14 +452,14 @@ function new_pb(){
         rdm=rand(1,3)
         
         if(rdm==1){
-            let a = rand(2,5)
+            let a = rand(2,4)
             let k = rand(0,4)
             problem=log_create(a,pow(a,k))+" = ?"
             record_style["category"]="로그 값 맞추기"
             answer=k
             problem_score=[1,-1]
         }else if(rdm==2){
-            let a= rand(2,5)
+            let a= rand(2,4)
             let k = rand(1,4)
             let value = rand(1,3)
             let B = rand(-3,3)
@@ -499,7 +499,7 @@ function new_pb(){
             record_style["category"]="로그 함수의 x 맞추기"
 
         }else if(rdm==3){
-            let a= rand(2,5)
+            let a= rand(2,4)
             if(rand(1,2)==1){
                 let k = rand(1,4)
                 problem=log_create("?",pow(a,k))+" = "+(k)
@@ -541,8 +541,13 @@ function new_pb(){
             let stack=[]
             for(var idx=0;idx<root;idx++){
                 root_value=rand(2,3)
-                stack.push(root_value)
-                a_value*=root_value
+                if(a_value*root_value>20){
+                    root=idx
+                    break
+                }else{
+                    stack.push(root_value)
+                    a_value*=root_value
+                }
             }
             let last_value="{"+(a)+"}^{"+(a_value*answer_value)+"}"
             for(var idx=0;idx<root;idx++){
@@ -555,7 +560,7 @@ function new_pb(){
             
 
         }else if(rdm==2){
-            let a=rand(-5,5)
+            let a=rand(-4,4)
             let b=rand(0,4)
             if(a==0 && b==0){
                 b=1
@@ -579,15 +584,15 @@ function new_pb(){
             }
 
         }else if(rdm==3){
-            let a = rand(2,5)
+            let a = rand(2,4)
             let A = rand(-3,3)
-            let B_1 = rand(-4,4)
-            let B_2 = rand(-4,4)
+            let B_1 = rand(-3,4)
+            let B_2 = rand(-3,4)
             
             problem = "{"+a+"}^{"+(linear_func_create(A,B_1))+"} = {"+a+"}^{"+(linear_func_create(A+1,B_2))+"} \\\\ x = ?"
             answer=B_1-B_2
             record_style["category"]="식을 만족하는 x 값 찾기"
-            problem_score=[4,-3]
+            problem_score=[4,-2]
 
         }
     }
@@ -617,9 +622,9 @@ function new_ans(i){
         /*not answer*/
         let wrong_answer=0;
         if(rand(1,2)===1){
-            wrong_answer=rand(answer-10,answer-1)
+            wrong_answer=rand(answer-5,answer-1)
         }else{
-            wrong_answer=rand(answer+1,answer+10)
+            wrong_answer=rand(answer+1,answer+5)
         }
         mole_ans[i]=wrong_answer
         percent[0]++
