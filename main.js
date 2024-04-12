@@ -479,9 +479,13 @@ function new_pb(){
             }else if(value==3){
                 // 진수가 1차함수
                 if(B<0){
-                    problem=log_create(a,"x-"+(-B))+" = "+ (k)
+                    problem=log_create(a,"("+"x-"+(-B)+")")+" = "+ (k)
                 }else{
-                    problem=log_create(a,"x+"+B)+" = "+ (k)
+                    if(B==0){
+                        problem=log_create(a,"x")+" = "+ (k)
+                    }else{
+                        problem=log_create(a,"("+"x"+(B)+")")+" = "+ (k)
+                    }
                 }
                 answer=pow(a,k)-B
                 problem_score=[5,-2]
@@ -491,11 +495,12 @@ function new_pb(){
 
         }else if(rdm==3){
             let a= rand(2,5)
-            let k = rand(0,4)
             if(rand(1,2)==1){
+                let k = rand(1,5)
                 problem=log_create("?",pow(a,k))+" = "+(k)
                 answer=a
             }else{
+                let k = rand(0,4)
                 problem=log_create(a,"?")+ " = "+ (k)
                 answer=pow(a,k)
             }
