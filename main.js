@@ -489,7 +489,7 @@ function new_pb(){
                     if(B==0){
                         problem=log_create(a,"x")+" = "+ (k)
                     }else{
-                        problem=log_create(a,"("+"x"+(B)+")")+" = "+ (k)
+                        problem=log_create(a,"("+"x+"+(B)+")")+" = "+ (k)
                     }
                 }
                 answer=pow(a,k)-B
