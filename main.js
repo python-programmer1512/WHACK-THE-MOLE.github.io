@@ -49,6 +49,11 @@ let correct = new Audio('./audio/correct.mp3');
 
 const domain = "https://mathgame.bass9030.dev" //"http://127.0.0.1:8000"//
 
+function abs(a){
+    if(a<0)return -a
+    else return a
+}
+
 function pow(a,b){
     return Math.pow(a,b)
 }
@@ -561,8 +566,17 @@ function new_pb(){
                 problem="{("+(a)+")}^{"+(b)+"} = ?"
             }
             record_style["category"]="지수 함수 값 계산하기"
-            problem_score=[1,-1]
+            
             answer=pow(a,b)
+            if(abs(answer)<=10){
+                problem_score=[1,-1]
+            }else if(abs(answer)<=30){
+                problem_score=[2,-2]
+            }else if(abs(answer)<=100){
+                problem_score=[2,-1]
+            }else{
+                problem_score=[3,-2]
+            }
 
         }else if(rdm==3){
             let a = rand(2,5)
