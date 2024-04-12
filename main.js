@@ -877,7 +877,7 @@ function run(i){
 
             new_ans(i)
             run(i)
-        }, rand(2000,3000))
+        }, rand(2000,2500))
 
     }, rand(1000,5000))
 
