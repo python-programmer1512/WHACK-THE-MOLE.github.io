@@ -448,7 +448,7 @@ function new_pb(){
         
         if(rdm==1){
             let a = rand(2,5)
-            let k = rand(0,5)
+            let k = rand(0,4)
             problem=log_create(a,pow(a,k))+" = ?"
             record_style["category"]="로그 값 맞추기"
             answer=k
@@ -496,11 +496,11 @@ function new_pb(){
         }else if(rdm==3){
             let a= rand(2,5)
             if(rand(1,2)==1){
-                let k = rand(1,5)
+                let k = rand(1,4)
                 problem=log_create("?",pow(a,k))+" = "+(k)
                 answer=a
             }else{
-                let k = rand(0,4)
+                let k = rand(0,3)
                 problem=log_create(a,"?")+ " = "+ (k)
                 answer=pow(a,k)
             }
@@ -535,7 +535,7 @@ function new_pb(){
             let a_value=1
             let stack=[]
             for(var idx=0;idx<root;idx++){
-                root_value=rand(2,4)
+                root_value=rand(2,3)
                 stack.push(root_value)
                 a_value*=root_value
             }
@@ -546,12 +546,12 @@ function new_pb(){
             problem=last_value+" = ?"
             answer=pow(a,answer_value)
             record_style["category"]="제곱근 계산"
-            problem_score=[5,-3]
+            problem_score=[5,-2]
             
 
         }else if(rdm==2){
             let a=rand(-5,5)
-            let b=rand(0,5)
+            let b=rand(0,4)
             if(a==0 && b==0){
                 b=1
             }
@@ -567,13 +567,13 @@ function new_pb(){
         }else if(rdm==3){
             let a = rand(2,5)
             let A = rand(-3,3)
-            let B_1 = rand(-5,5)
-            let B_2 = rand(-5,5)
+            let B_1 = rand(-4,4)
+            let B_2 = rand(-4,4)
             
             problem = "{"+a+"}^{"+(linear_func_create(A,B_1))+"} = {"+a+"}^{"+(linear_func_create(A+1,B_2))+"} \\\\ x = ?"
             answer=B_1-B_2
             record_style["category"]="식을 만족하는 x 값 찾기"
-            problem_score=[3,-3]
+            problem_score=[4,-3]
 
         }
     }
