@@ -596,7 +596,7 @@ function new_pb(){
 
         }
     }
-    console.log(problem)
+    //console.log(problem)
     record_style["problem"]=problem
     record_style["problem_answer"]=String(answer)
     katex.render(record_style["problem"], PB, { 
@@ -774,6 +774,7 @@ function update_percent(new_answer){
     percent[0]=1
     percent[1]=holes.length
     last_percent=[1,holes.length]
+    var on=0
     for(var i=0;i<holes.length;i++){
         if(mole_ans[i]==new_answer){
             last_percent[0]=percent[0]
@@ -781,9 +782,14 @@ function update_percent(new_answer){
             last_percent[0]=min(last_percent[0],last_percent[1])
             percent[0]=1
             percent[1]++
+            on=1
         }else{
             percent[0]++
         }
+    }
+    if(on==1){
+        percent[0]=holes.length
+        percent[1]=holes.length
     }
     return percent
 }
