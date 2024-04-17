@@ -822,7 +822,7 @@ function run(i){
         img.addEventListener('click', () => { /* 두더지를 때렸을 때*/
             if(hole_out[i]===1){
                 hole_out[i]=0
-                console.log(mole_ans[i],answer,mole_ans[i]==answer,mole_ans[i]===answer)
+                //console.log(mole_ans[i],answer,mole_ans[i]==answer,mole_ans[i]===answer)
                 if(mole_ans[i]===answer){
                     score += problem_score[0]
                     correct_pb_cnt++
