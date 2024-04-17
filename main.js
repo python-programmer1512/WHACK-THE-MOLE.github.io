@@ -72,10 +72,10 @@ function fastapi(method,url, params){
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 // Request was successful
-                console.log(xhr.responseText);
+                //console.log(xhr.responseText);
             } else {
                 // Handle errors or other status codes here
-                console.error(xhr.statusText);
+                //console.error(xhr.statusText);
             }
         };
 
@@ -88,9 +88,9 @@ function fastapi(method,url, params){
         xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                console.log('통신 성공!');
-                console.log(xhr.responseText,JSON.parse(xhr.responseText).user_exit);
-                console.log(JSON.parse(xhr.responseText).user_exit==true)
+                //console.log('통신 성공!');
+                //console.log(xhr.responseText,JSON.parse(xhr.responseText).user_exit);
+                //console.log(JSON.parse(xhr.responseText).user_exit==true)
             } else {
                 console.error('통신 실패!');
             }
