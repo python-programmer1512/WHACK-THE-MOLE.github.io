@@ -19,6 +19,7 @@ const PB=document.getElementById('problem');
 const game_start_button = document.getElementById("start-img-button")
 let score = 0
 let answer = 0 
+let mole_condition = new Array(holes.length).fill('')
 let percent=[1,holes.length]
 let last_percent=[1,holes.length]
 let user_School_Number = 0
@@ -57,6 +58,30 @@ function abs(a){
 function pow(a,b){
     return Math.pow(a,b)
 }
+const new_mole = (i,succes_callback,failure_callback) => {
+    const hole = holes[i]
+    hole.querySelectorAll('*').forEach(n => n.remove());
+
+    //const img = document.replaceChildren('img')
+    const img = document.createElement('img')
+    img.classList.add('mole-down-start')
+    img.src = './image/mole.png'
+    img.id = 'mole-movement_'+i
+
+    hole.appendChild(img)
+
+    //const span = document.replaceChildren('span')
+    const span = document.createElement('span')
+    let mole_text=document.createTextNode('')
+    span.classList.add('text-down-start')
+    span.appendChild(mole_text)
+    span.id = 'text-movement_'+i
+
+    hole.appendChild(span)
+
+    succes_callback()
+}
+
 
 function fastapi(method,url, params){
     
@@ -635,6 +660,35 @@ function new_ans(i){
 }
 
 
+function correct_new_ans(i,new_answer){
+    let random=rand(1,9)
+    if(random<=percent[0]){
+        /*answer*/
+
+        mole_ans[i]=answer
+    }else{
+        /*not answer*/
+        let wrong_answer=0;
+        if(rand(1,2)===1){
+            wrong_answer=rand(answer-5,answer-1)
+        }else{
+            wrong_answer=rand(answer+1,answer+5)
+        }
+        mole_ans[i]=wrong_answer
+
+    }
+    update_percent(new_answer)
+
+}
+
+
+function pd_mole(i){
+    new_mole(i,()=>{
+        new_ans(i)
+        mole_move('rise','down',i)
+    },()=>{})
+}
+
 function game_start(){
     modal.style.display="none"
     gs.style.display="none"
@@ -659,28 +713,7 @@ function game_start(){
     new_pb()
     for(var i=0;i<holes.length;i++){
         hole_out[i]=0
-        if(last_game===0){
-            const hole = holes[i]
-            const img = document.createElement('img')
-            img.classList.add('mole-down')
-            img.src = './image/mole.png'
-            img.id = 'mole-movement_'+i
-            
-            hole.appendChild(img)
-
-            const span = document.createElement('span')
-            let mole_text=document.createTextNode('')
-            span.classList.add('text-down')
-            span.appendChild(mole_text)
-            span.id = 'text-movement_'+i
-
-            hole.appendChild(span)
-        }
-
-        new_ans(i)
-        mole_move('rise','down',i)
-
-
+        pd_mole(i)
 
     }
     start_time = new Date().getTime()
@@ -693,9 +726,9 @@ function game_start(){
         if(TIMER.textContent<=0){
             if(game_finish===0){
                 game_finish = 1
-                console.log('Game Finish!!')
+                //console.log('Game Finish!!')
                 game_record.push(record_style)
-                console.log(game_record)
+                //console.log(game_record)
                 TIMER.textContent=0.00
 
                 /*
@@ -756,6 +789,11 @@ function retry_game(){
 }
 
 function mole_move(A,B,i){ /* class : A -> B, down : {A:mole-rise,B:mole-down}, up : {A:mole-down,B:mole-rise} */
+
+
+    if(mole_condition[i]==B)return
+
+
     const mole_before_class = "mole-"+A
     const mole_after_class = "mole-"+B
 
@@ -769,12 +807,14 @@ function mole_move(A,B,i){ /* class : A -> B, down : {A:mole-rise,B:mole-down}, 
     before_class_text.classList.replace(text_before_class,text_after_class)
 
 
+    mole_condition[i]=B
+
+
 }
 function update_percent(new_answer){
     percent[0]=1
     percent[1]=holes.length
     last_percent=[1,holes.length]
-    var on=0
     for(var i=0;i<holes.length;i++){
         if(mole_ans[i]==new_answer){
             last_percent[0]=percent[0]
@@ -782,21 +822,18 @@ function update_percent(new_answer){
             last_percent[0]=min(last_percent[0],last_percent[1])
             percent[0]=1
             percent[1]++
-            on=1
         }else{
             percent[0]++
         }
     }
-    if(on==1){
-        percent[0]=holes.length
-        percent[1]=holes.length
-    }
+
     return percent
 }
 
-
 function run(i){
     const hole = holes[i]
+
+
     let timer = null
     let uptimer = null
 
@@ -816,10 +853,14 @@ function run(i){
         
         /* 변경 */
         span.innerHTML = mole_ans[i];
-        mole_move('down','rise',i)
-        hole_out[i]=1
+        if(hole_out[i]==0){
+            mole_move('down-start','rise',i)
+            hole_out[i]=1
+        }
 
         img.addEventListener('click', () => { /* 두더지를 때렸을 때*/
+
+            var correct_answer = 0
             if(hole_out[i]===1){
                 hole_out[i]=0
                 //console.log(mole_ans[i],answer,mole_ans[i]==answer,mole_ans[i]===answer)
@@ -838,6 +879,7 @@ function run(i){
                     pb_wrong_ans=0
                     new_pb()
                     update_percent(answer)
+                    correct_answer=1
                 }else {
                     score += problem_score[1]
                     wrong_pb_cnt++
@@ -860,11 +902,20 @@ function run(i){
                 scoreEl.textContent = score
                 clearTimeout(timer)
                 mole_move('rise','down',i)
+                const move_finish = document.getElementById("mole-movement_"+i)
 
-                new_ans(i)
+                move_finish.addEventListener('animationend', () => {
 
-                run(i)
-                return
+                    new_mole(i,()=>{
+                        if(correct_answer==1){
+                            correct_new_ans(i,answer)
+                        }else{
+                            new_ans(i)
+                        }
+                        run(i)
+                        return
+                    },()=>{})
+                });
 
             }
         })
@@ -885,12 +936,18 @@ function run(i){
                 clearTimeout(timer)
                 return
             }
+            const move_finish = document.getElementById("mole-movement_"+i)
 
-            new_ans(i)
-            run(i)
+            move_finish.addEventListener('animationend', () => {
+                new_mole(i,()=>{
+                    new_ans(i)
+                    run(i)
+                },()=>{})
+            });
+
         }, rand(2000,2500))
 
-    }, rand(1300,2000))
+    }, rand(1000,2000))
 
 }
 

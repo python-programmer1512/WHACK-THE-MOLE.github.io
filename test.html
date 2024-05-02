@@ -1,34 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css">
-        <title>Whack A Mole</title>
-        <!-- KaTeX CSS 파일 추가 -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.css">
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @keyframes moveRight {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(300px);
+        }
+      }
 
-        <!-- KaTeX JavaScript 파일 추가 -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.js"></script>
-        <script>
-            window.WebFontConfig = {
-                custom: {
-                    families: ['KaTeX_AMS', 'KaTeX_Caligraphic:n4,n7', 'KaTeX_Fraktur:n4,n7',
-                    'KaTeX_Main:n4,n7,i4,i7', 'KaTeX_Math:i4,i7', 'KaTeX_Script',
-                    'KaTeX_SansSerif:n4,n7,i4', 'KaTeX_Size1', 'KaTeX_Size2', 'KaTeX_Size3',
-                    'KaTeX_Size4', 'KaTeX_Typewriter'],
-                },
-            };
-        </script>
-        <script defer src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script>
+      #hanbyeol {
+        animation: 1s moveRight forwards;
+      }
+    </style>
+  </head>
+  <body>
+    <img
+      src="https://item.kakaocdn.net/do/592728ea7408bcf69f797c0446b584a6c37d537a8f2c6f426591be6b8dc7b36a"
+      id="hanbyeol"
+      alt="집에 가는 한별이"
+    />
+    <script>
+      const $hanbyeol = document.querySelector('#hanbyeol');
 
-    </head>
-    <body>
-        <div id="rendered"></div>
-
-        <script>
-        // LaTeX 수식 렌더링
-        katex.render("a_1 = 1, a_2 = 2, a_3 = ?", document.getElementById("rendered"));
-        </script>
-    </body>
+      $hanbyeol.addEventListener('animationend', () => {
+        alert('한별이가 오른쪽으로 이동했어요!');
+      });
+    </script>
+  </body>
+</html>
