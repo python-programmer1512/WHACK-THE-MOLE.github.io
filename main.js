@@ -594,6 +594,7 @@ function game_start(){
             img.classList.add('mole-down')
             img.src = './image/mole.png'
             img.id = 'mole-movement_'+i
+            img.draggable = false;
             
             hole.appendChild(img)
 

@@ -92,7 +92,6 @@ left : 실제 이동 값
     width: 100%;
     height: 100%;
     position: relative;
-    
 }
 .hole-in{ /* unset 는 부모의 상속*/
     width: 86%;
@@ -135,6 +134,10 @@ left : 실제 이동 값
 
     position: absolute;
 
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .mole .text-rise{
