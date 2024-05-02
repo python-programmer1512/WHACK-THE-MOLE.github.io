@@ -59,113 +59,41 @@ function pow(a,b){
     return Math.pow(a,b)
 }
 
-function fastapi(method,url, params){
-    //TODO: 가독성 위해 fetch구현체로 변경
-    if(method=='post'){
-        var xhr = new XMLHttpRequest();
-
-        xhr.open("POST", url, true);
-
-        // Set headers
-        xhr.setRequestHeader("Accept", "*/*");
-        xhr.setRequestHeader("Content-Type", "application/json");
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Request was successful
-                //console.log(xhr.responseText);
-            } else {
-                // Handle errors or other status codes here
-                //console.error(xhr.statusText);
-            }
-        };
-
-        xhr.send(params);
-    }else if(method=='get'){
-        //fastapi(domain+"/api/record/create/"+String(user_School_Number), params)
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-
-        xhr.onreadystatechange = () => {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                //console.log('통신 성공!');
-                //console.log(xhr.responseText,JSON.parse(xhr.responseText).user_exit);
-                //console.log(JSON.parse(xhr.responseText).user_exit==true)
-            } else {
-                console.error('통신 실패!');
-            }
-        }
-        };
-
-        xhr.send();
-    }
-
-
-
-    /*
-    fetch(_url, options)
-        .then(response => {  fetch 를 통해 들어온 값이 then 의 response 에 입력되서 then 안에 있는 임의 함수를 실행함
-            
-        if(response.status === 204) {  // No content
-                if(success_callback) {
-                    success_callback()
-                }
-                return
-            }
-            console.log("response")
-            console.log(response)
-
-            response.json()
-                .then(json => {
-
-
-                    if(response.status >= 200 && response.status < 300) {  // 200 ~ 299
-                        if(success_callback) {                 
-
-                            success_callback(json)
-                        
-                        }
-                        return
-
-                    }else {
-                        if (failure_callback) {
-                            failure_callback(json)
-                        }else {
-                            console.log('!!')
-                            console.log(json)
-                            console.log(JSON.stringify(json))
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.log('error')
-                    console.log(error)
-                    console.log(JSON.stringify(error))
-                })
-        })
-        */
+/**
+ * fastapi 호출
+ * @param {string} method 
+ * @param {string} url 
+ * @param {string} parmas 
+ */
+async function fastapi(method, url, parmas) {
+    fetch(url, {
+        method: method,
+        headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/json'
+        },
+        body: parmas
+    }).then(async (res) => {
+        console.log(await res.text());
+    }).catch(e => {
+        console.error(e);
+    })
 }
+
+/**
+ * 
+ * @param {string} url 
+ * @param {Function} succes_callback 
+ * @param {function} failure_callback 
+ */
 const user_available_check = (url,succes_callback,failure_callback) => {
-    const xhr = new XMLHttpRequest();
-
-    xhr.open('GET', url);
-
-    xhr.onreadystatechange = () => {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-            // console.log('통신 성공!');
-            // console.log(xhr.responseText,JSON.parse(xhr.responseText).user_exit);
-            // console.log(JSON.parse(xhr.responseText).user_exit==true)
-            succes_callback(JSON.parse(xhr.responseText))
-        } else {
-            failure_callback()
-            // console.error('통신 실패!');
-        }
-    }
-    };
-
-    xhr.send();
+    fetch(url, {
+        method: 'get'
+    }).then(async res => {
+        succes_callback(await res.json());
+    }).catch(() => {
+        failure_callback();
+    })
 }
 
 
