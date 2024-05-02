@@ -47,7 +47,8 @@ let wrong_pb_cnt = 0
 let audio = new Audio('./audio/atteck.mp3');
 let correct = new Audio('./audio/correct.mp3');
 
-const domain = "https://mathgame.bass9030.dev" //"http://127.0.0.1:8000"//
+// const domain = "https://mathgame.bass9030.dev" //"http://127.0.0.1:8000"//
+const domain = "http://localhost:8000"
 
 function abs(a){
     if(a<0)return -a
@@ -59,7 +60,7 @@ function pow(a,b){
 }
 
 function fastapi(method,url, params){
-    
+    //TODO: 가독성 위해 fetch구현체로 변경
     if(method=='post'){
         var xhr = new XMLHttpRequest();
 
@@ -698,27 +699,6 @@ function game_start(){
                 console.log(game_record)
                 TIMER.textContent=0.00
 
-                /*
-                
-                {
-                    "main_category": "",
-                    "correct_pb_cnt": 4440,
-                    "wrong_pb_cnt": 3330,
-                    "score": 144231330,
-                    "user_name": "",
-                    "create_date": datetime.now(),
-                    "detail": [
-                        {
-                        "category": "1112222",
-                        "problem": "33334444",
-                        "problem_answer": "qqqqqwwww",
-                        "user_answers": "ddddzzzxss"
-                        }
-                    ]
-                }
-                
-                */
-
                 params = JSON.stringify({
                     "main_category": category,
                     "correct_pb_cnt": correct_pb_cnt,
@@ -755,6 +735,13 @@ function retry_game(){
 
 }
 
+/**
+ * 두더지 이동
+ * 클래스가 A -> B로 변경됨
+ * @param {string} A 
+ * @param {string} B 
+ * @param {number} i 
+ */
 function mole_move(A,B,i){ /* class : A -> B, down : {A:mole-rise,B:mole-down}, up : {A:mole-down,B:mole-rise} */
     const mole_before_class = "mole-"+A
     const mole_after_class = "mole-"+B
@@ -794,14 +781,14 @@ function update_percent(new_answer){
     return percent
 }
 
-
 function run(i){
     const hole = holes[i]
-    let timer = null
-    let uptimer = null
+    let downtimer;
+    let uptimer;
 
     if(TIMER.textContent<=0){
         clearTimeout(uptimer)
+        clearTimeout(downtimer);
         return
     }
 
@@ -815,6 +802,7 @@ function run(i){
         }
         
         /* 변경 */
+        if(hole_out == 1) return; // 두더지가 이미 올라와있다면 무시 (깜빡임 방지)
         span.innerHTML = mole_ans[i];
         mole_move('down','rise',i)
         hole_out[i]=1
@@ -858,7 +846,7 @@ function run(i){
                     }
                 }
                 scoreEl.textContent = score
-                clearTimeout(timer)
+                clearTimeout(downtimer)
                 mole_move('rise','down',i)
 
                 new_ans(i)
@@ -873,16 +861,17 @@ function run(i){
         hole.appendChild(span)
 
         if(TIMER.textContent<=0){
-            clearTimeout(timer)
+            clearTimeout(downtimer)
             return
         }
 
-        timer = setTimeout  (() => { /* 두더지를 때리지 못하고 들어갔을때 */
+        downtimer = setTimeout  (() => { /* 두더지를 때리지 못하고 들어갔을때 */
+            if(hole_out[i] == 0) return; // 두더지가 이미 내려와있다면 무시 (깜빡임 방지)
             hole_out[i]=0
             mole_move('rise','down',i)
 
             if(TIMER.textContent<=0){
-                clearTimeout(timer)
+                clearTimeout(downtimer)
                 return
             }
 
