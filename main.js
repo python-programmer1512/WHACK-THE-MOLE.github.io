@@ -17,6 +17,8 @@ const final_score = document.querySelector('.final-score span')
 const TIMER=document.querySelector('.timer span');
 const PB=document.getElementById('problem');
 const game_start_button = document.getElementById("start-img-button")
+const isTouchDevice = (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement);
+
 let score = 0
 let answer = 0 
 let mole_condition = new Array(holes.length).fill('')
@@ -834,6 +836,7 @@ function run(i){
     const hole = holes[i]
 
 
+
     let timer = null
     let uptimer = null
 
@@ -945,7 +948,7 @@ function run(i){
                 },()=>{})
             });
 
-        }, rand(2000,2500))
+        }, rand(1800,2200))
 
     }, rand(1000,2000))
 
@@ -957,30 +960,42 @@ window.addEventListener('mousemove', e => {
 
 
 })
+// 휴대폰에서 누르면 1,2 도 반응함
+// 0 : 컴퓨터, 1 : 휴대폰
+if(!isTouchDevice){
 
+    cursor.classList.add('mousepointer-on')
 
-window.addEventListener('mousedown', () => {
-    audio.play()
-    audio.volume = 0.5
-    cursor.classList.add('active')
-})
-window.addEventListener('mouseup', () => {
-    cursor.classList.remove('active')
+    window.addEventListener('mousedown', () => {
+        audio.play()
+        audio.volume = 0.5
+
+        cursor.classList.add('active')
+    })
+    window.addEventListener('mouseup', () => {
+
+        cursor.classList.remove('active')
+        
+    })
     
-})
+}else{
 
+    cursor.classList.add('mousepointer-off')
+}
 window.addEventListener('touchstart', (e) => {
     audio.play()
     audio.volume = 0.5
     this.touches = e.changedTouches
     cursor.style.top = this.touches[0].pageY  - cursor.clientHeight/2 + 'px'
     cursor.style.left = this.touches[0].pageX - cursor.clientWidth/2 + 'px'
+
     cursor.classList.add('active-touch')
 })
 window.addEventListener('touchend', (e) => {
     this.touches = e.changedTouches
     cursor.style.top = this.touches[0].pageY  - cursor.clientHeight/2 + 'px'
     cursor.style.left = this.touches[0].pageX - cursor.clientWidth/2 + 'px'
+
     cursor.classList.remove('active-touch')
     
 })

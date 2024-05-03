@@ -406,7 +406,12 @@ left : 실제 이동 값
 
 }
 
-
+.cursor.mousepointer-off{
+    background-image: none;
+}
+.cursor.mousepointer-on{
+    background-image: url('./image/hammer.png');
+}
 
 .cursor.active{
     animation-name: hammer_crash;
@@ -416,6 +421,12 @@ left : 실제 이동 값
 
 .cursor.active-touch{
     animation-name: hammer_crash_touch;
+    animation-duration: .3s;
+
+}
+
+.cursor.active-touch-none{
+    animation-name: hammer_crash_touch-none;
     animation-duration: .3s;
 
 }
@@ -435,6 +446,15 @@ left : 실제 이동 값
     }
     100%{
         background-image: url('./image/hammer_crash.png');
+    }
+}
+
+@keyframes hammer_crash_touch-none {
+    0%{
+        background-image: url('./image/background_blurred_effect.png');
+    }
+    100%{
+        background-image: url('./image/background_blurred_effect.png');
     }
 }
 
@@ -570,6 +590,13 @@ input.re-img-button{
     width: 100px;
     height: 50px;
 }
+input.website-img-button{
+    background: url('./image/website.png') no-repeat;
+    background-size: 100%, 50%;
+    border: none;
+    width: 100px;
+    height: 50px;
+}
 
 
 #modal .modal-window {
@@ -639,3 +666,4 @@ input.re-img-button{
 #submit-category,#submit-category_check{
     display: none;
 }
+
