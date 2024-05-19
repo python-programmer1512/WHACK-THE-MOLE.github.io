@@ -24,12 +24,12 @@ body{
 }
 
 .pb_board{
-    position: absolute;
+    position: relative;
     height: 150px;
     width: 90vw;
     background-image: url("./image/board.png");
     background-size: 100% 100%;
-    transform: translateY(50%);
+    /*transform: translateY(50%);*/
 }
 /*
 max : width 가 value보다 작을때 실행
@@ -39,7 +39,7 @@ left : 실제 이동 값
 */
 @media (min-width : 500px){ 
     .pb_board{
-        position: absolute;
+        position: relative;
         height: 150px;
         width: 500px;
         background-image: url("./image/board.png");
@@ -57,7 +57,7 @@ left : 실제 이동 값
 }
 
 .board{
-    position: absolute;
+    position: relative;
     display: grid;
     margin: 0 auto;
     grid-template-columns: repeat(3, 1fr);
@@ -67,12 +67,12 @@ left : 실제 이동 값
     width: 85vw;
     height: 85vw;
 
-    transform: translateY(50%) translateY(170px);
+    /*transform: translateY(50%) translateY(170px);*/
 }
 
 @media (min-width : 500px){ 
     .board{
-        position: absolute;
+        position: relative;
         display: grid;
         margin: 0 auto;
         grid-template-columns: repeat(3, 1fr);
@@ -83,7 +83,7 @@ left : 실제 이동 값
         height: 500px;
 
         
-        transform: translateY(50%) translateY(170px);
+        /*transform: translateY(50%) translateY(170px);*/
     }
 
 }
@@ -344,8 +344,8 @@ left : 실제 이동 값
 .score{
     pointer-events: none;
     text-align: left;
-    position: absolute;
-    transform: translateY(50%) translateY(170px) translateY(85vw);
+    position: relative;
+    /*transform: translateY(50%) translateY(170px) translateY(85vw);*/
     font-size: 1.5em;
     color: black;
 }
@@ -354,8 +354,8 @@ left : 실제 이동 값
     .score{
         pointer-events: none;
         text-align: left;
-        position: absolute;
-        transform: translateY(50%) translateY(170px) translateY(500px);
+        position: relative;
+        /*transform: translateY(50%) translateY(170px) translateY(500px);*/
         font-size: 1.5em;
         color: black;
     }
@@ -364,18 +364,18 @@ left : 실제 이동 값
 
 .timer{
     pointer-events: none;
-    position: absolute;
-    transform: translateY(50%) translateY(170px) translateY(85vw) translateY(30px);
+    position: relative;
+    /*transform: translateY(50%) translateY(170px) translateY(85vw) translateY(30px);*/
     font-size: 1.5em;
-    color:black
+    color:rgb(228, 152, 152)
     
 }
 
 @media(min-width : 500px){
     .timer{
         pointer-events: none;
-        position: absolute;
-        transform: translateY(50%) translateY(170px) translateY(500px) translateY(30px);
+        position: relative;
+        /*transform: translateY(50%) translateY(170px) translateY(500px) translateY(30px);*/
         font-size: 1.5em;
         color:black
     }
