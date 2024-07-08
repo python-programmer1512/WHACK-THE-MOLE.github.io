@@ -10,7 +10,6 @@ body{
     color: #fff;
     user-select: none;
     cursor : none;
-    
 }
 
 .container{
@@ -389,6 +388,7 @@ left : 실제 이동 값
     background-size: 100% 100%;
     transition: background-image .3s ease-out;
     pointer-events: none;
+    z-index: 999;
     
 }
 
