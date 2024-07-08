@@ -10,8 +10,6 @@ body{
     color: #fff;
     user-select: none;
     cursor : none;
-    
-
 }
 
 .container{
@@ -390,6 +388,7 @@ left : 실제 이동 값
     background-size: 100% 100%;
     transition: background-image .3s ease-out;
     pointer-events: none;
+    z-index: 999;
     
 }
 
@@ -462,7 +461,7 @@ left : 실제 이동 값
 #modal.modal-overlay { /* 뒤에 흐릿한 부분 */
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     display: flex;
@@ -473,27 +472,8 @@ left : 실제 이동 값
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     backdrop-filter: blur(1.5px);
     -webkit-backdrop-filter: blur(1.5px);
+    border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-@media(min-width : 550px){
-    #modal.modal-overlay { /* 뒤에 흐릿한 부분 */
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: rgba(121, 115, 115, 0.543);
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        backdrop-filter: blur(1.5px);
-        -webkit-backdrop-filter: blur(1.5px);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-    }
 }
 
 #game-setting{
@@ -506,32 +486,6 @@ left : 실제 이동 값
     display: none;
 }
 
-.button{
-    transform: translateY(15vh);
-}
-.button-2{
-    transform: translateY(6vh);
-}
-@media(min-width : 550px){
-    #modal.modal-overlay { /* 뒤에 흐릿한 부분 */
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: rgba(121, 115, 115, 0.543);
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        backdrop-filter: blur(1.5px);
-        -webkit-backdrop-filter: blur(1.5px);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-}
-
 input#start-img-button{
     display: none;
     background: url('./image/start.png') no-repeat;
@@ -541,13 +495,22 @@ input#start-img-button{
     height: 60px;
 }
 
-input.setting-start-img-button{
-    background: url('./image/gamestart_mole_before.png') no-repeat;
-    background-size: 100%, 60%;
+input.gamerule-img-button {
+    background: url('./image/gamerule_new.png') no-repeat;
+    background-size: contain;
     border: none;
     width: 240px;
-    height: 144px;
+    height: 103px;
 }
+
+input.setting-start-img-button{
+    background: url('./image/gamestart_mole_before.png') no-repeat;
+    background-size: contain;
+    border: none;
+    width: 240px;
+    height: 103px;
+}
+
 input.setting-start-img-button:hover{
     animation-name: gamestart_bar_mole_rise;
     animation-duration: .3s;
@@ -575,14 +538,6 @@ input.setting-start-img-button:hover{
     }
 }
 
-
-input.gamerule-img-button{
-    background: url('./image/gamerule_new.png') no-repeat;
-    background-size: 100%, 60%;
-    border: none;
-    width: 240px;
-    height: 144px;
-}
 input.re-img-button{
     background: url('./image/re.png') no-repeat;
     background-size: 100%, 50%;
@@ -611,6 +566,7 @@ input.website-img-button{
     position: relative;
     padding: 1.25vw;
     text-align: center;
+    margin: 0 auto;
 
 }
 
@@ -625,7 +581,6 @@ input.website-img-button{
         width: 400px;
         height: 500px;
         position: relative;
-        top: -100px;
         padding: 10px;
         text-align: center;
         
@@ -658,6 +613,10 @@ input.website-img-button{
     padding: 0px 10px;
     text-shadow: 1px 1px 2px gray;
     color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #submit-schoolnumber,#submit-schoolnumber_check{

@@ -19,6 +19,9 @@ const PB=document.getElementById('problem');
 const game_start_button = document.getElementById("start-img-button")
 const isTouchDevice = (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement);
 
+const url = new URL(window.location.href);
+
+
 let score = 0
 let answer = 0 
 let mole_condition = new Array(holes.length).fill('')
@@ -48,6 +51,7 @@ let correct_pb_cnt = 0
 let wrong_pb_cnt = 0
 
 let audio = new Audio('./audio/atteck.mp3');
+audio.volume = 0.5;
 let correct = new Audio('./audio/correct.mp3');
 
 const domain = "https://mathgame.bass9030.dev" //"http://127.0.0.1:8000"//
@@ -126,51 +130,6 @@ function fastapi(method,url, params){
 
         xhr.send();
     }
-
-
-
-    /*
-    fetch(_url, options)
-        .then(response => {  fetch 를 통해 들어온 값이 then 의 response 에 입력되서 then 안에 있는 임의 함수를 실행함
-            
-        if(response.status === 204) {  // No content
-                if(success_callback) {
-                    success_callback()
-                }
-                return
-            }
-            console.log("response")
-            console.log(response)
-
-            response.json()
-                .then(json => {
-
-
-                    if(response.status >= 200 && response.status < 300) {  // 200 ~ 299
-                        if(success_callback) {                 
-
-                            success_callback(json)
-                        
-                        }
-                        return
-
-                    }else {
-                        if (failure_callback) {
-                            failure_callback(json)
-                        }else {
-                            console.log('!!')
-                            console.log(json)
-                            console.log(JSON.stringify(json))
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.log('error')
-                    console.log(error)
-                    console.log(JSON.stringify(error))
-                })
-        })
-        */
 }
 const user_available_check = (url,succes_callback,failure_callback) => {
     const xhr = new XMLHttpRequest();
@@ -967,8 +926,10 @@ if(!isTouchDevice){
     cursor.classList.add('mousepointer-on')
 
     window.addEventListener('mousedown', () => {
-        audio.play()
-        audio.volume = 0.5
+        console.log('mousedown')
+        audio.pause();
+        audio.currentTime = 0;
+        audio.play();
 
         cursor.classList.add('active')
     })
@@ -979,12 +940,12 @@ if(!isTouchDevice){
     })
     
 }else{
-
     cursor.classList.add('mousepointer-off')
 }
 window.addEventListener('touchstart', (e) => {
+    audio.pause();
+    audio.currentTime = 0;
     audio.play()
-    audio.volume = 0.5
     this.touches = e.changedTouches
     cursor.style.top = this.touches[0].pageY  - cursor.clientHeight/2 + 'px'
     cursor.style.left = this.touches[0].pageX - cursor.clientWidth/2 + 'px'
@@ -999,3 +960,23 @@ window.addEventListener('touchend', (e) => {
     cursor.classList.remove('active-touch')
     
 })
+
+window.addEventListener('load', () => {
+    if(hasParam('token')) {
+        let token = getUrlParam('token');
+        setting_game();
+
+        //TODO: token(JWT) 해독하여 학번 입력
+        user_School_Number = token;
+        document.querySelector('#school_number').value = token;
+        school_number({keyCode: 13});
+    }
+})
+
+function hasParam(key) {
+    return url.searchParams.has(key)
+}
+
+function getUrlParam(key) {
+    return url.searchParams.get(key)
+}
