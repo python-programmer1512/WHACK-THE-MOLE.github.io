@@ -94,6 +94,10 @@ function fastapi(method,url, params){
     if(method=='post'){
         var xhr = new XMLHttpRequest();
 
+        let pa={"school_name":"운호고등학교"}
+
+        url += "?" + new URLSearchParams(pa)
+
         xhr.open("POST", url, true);
 
         // Set headers
@@ -131,8 +135,10 @@ function fastapi(method,url, params){
         xhr.send();
     }
 }
-const user_available_check = (url,succes_callback,failure_callback) => {
+const user_available_check = (url,params,succes_callback,failure_callback) => {
     const xhr = new XMLHttpRequest();
+
+    url += "?" + new URLSearchParams(params)
 
     xhr.open('GET', url);
 
@@ -177,7 +183,8 @@ function setting_game(){
 
 
 function click2start(){
-    user_available_check(domain+'/api/user/user-exist/'+String(user_School_Number),(json)=>{
+    params={"school_name" : "운호고등학교"}
+    user_available_check(domain+'/api/user/user-exist/'+String(user_School_Number),params,(json)=>{
         if(json.user_exit){
             check_imoji.style.display="inline"
             check_imoji_check.style.display="inline"
@@ -221,7 +228,8 @@ function set_category(input_category){
 
 function school_number(e){ // value + ord(keyCode) : 입력한 숫자
     if(e.keyCode === 13){ //13 이 엔터 입력
-        user_available_check(domain+'/api/user/user-exist/'+String(user_School_Number),(json)=>{
+        params={"school_name" : "운호고등학교"}
+        user_available_check(domain+'/api/user/user-exist/'+String(user_School_Number),params,(json)=>{
             if(json.user_exit){
                 check_imoji.style.display="inline"
                 check_imoji_check.style.display="inline"
