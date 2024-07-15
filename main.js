@@ -169,8 +169,8 @@ function gamerule(){
 }
 
 function setting_game(){
-    gs.style.display = "inline"
-    sp.style.display = "none"
+    //gs.style.display = "inline"
+    //sp.style.display = "none"
     check_imoji.style.display="none"
     check_imoji_check.style.display="none"
     submit_category.style.display="none"
@@ -970,6 +970,7 @@ window.addEventListener('touchend', (e) => {
 })
 
 window.addEventListener('load', () => {
+    
     if(hasParam('token')) {
         let token = getUrlParam('token');
         setting_game();
