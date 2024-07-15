@@ -221,7 +221,7 @@ function set_category(input_category){
 
 function school_number(e){ // value + ord(keyCode) : 입력한 숫자
     if(e.keyCode === 13){ //13 이 엔터 입력
-        user_available_check(domain+'/api/user/user-exist/'+String(user_School_Number),(json)=>{
+        user_available_check(domain+'/api/user/user-exist/'+String(user_School_Number)+'?school_name=운호고등학교' ,(json)=>{
             if(json.user_exit){
                 check_imoji.style.display="inline"
                 check_imoji_check.style.display="inline"
@@ -966,11 +966,17 @@ window.addEventListener('load', () => {
         let token = getUrlParam('token');
         setting_game();
 
-        //TODO: token(JWT) 해독하여 학번 입력
         user_School_Number = token;
         document.querySelector('#school_number').value = token;
         school_number({keyCode: 13});
     }
+
+    if(hasParam('type')) {
+        let type = getUrlParam('type');
+        set_category(type);
+    }
+
+    if(hasParam('token') && hasParam('type')) game_start();
 })
 
 function hasParam(key) {
