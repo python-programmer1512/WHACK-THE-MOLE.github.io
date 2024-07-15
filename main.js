@@ -975,11 +975,17 @@ window.addEventListener('load', () => {
         let token = getUrlParam('token');
         setting_game();
 
-        //TODO: token(JWT) 해독하여 학번 입력
         user_School_Number = token;
         document.querySelector('#school_number').value = token;
         school_number({keyCode: 13});
     }
+
+    if(hasParam('type')) {
+        let type = getUrlParam('type');
+        set_category(type);
+    }
+
+    if(hasParam('token') && hasParam('type')) game_start();
 })
 
 function hasParam(key) {
