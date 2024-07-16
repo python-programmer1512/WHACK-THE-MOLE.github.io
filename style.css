@@ -120,6 +120,15 @@ left : 실제 이동 값
     background-size: 100% 100%;
     top: 62%;
 }
+#intro_ui {
+    display: inline;
+}
+
+#fin_ui {
+    display: none;
+}
+
+
 
 .start_ui {
     width: 100%;
@@ -137,6 +146,26 @@ left : 실제 이동 값
     -webkit-backdrop-filter: blur(1.5px);
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+
+.end_ui{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(121, 115, 115, 0.543);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
 }
 
 
@@ -168,8 +197,47 @@ left : 실제 이동 값
 
 }
 
-.ui_button {
-    margin-top: 303px;
+.gameover_img{ 
+    background-image: url("./image/gameover_score_ui.png");
+    background-size: 100% 100%;
+    left: 50%;
+    top: 2.5vw;
+    width: 90vw;
+    height: 500px;
+    padding: 1.25vw;
+    text-align: center;
+    margin: 0 auto;
+
+}
+
+@media(min-width : 550px){
+    .gameover_img{
+        background-image: url("./image/gameover_score_ui.png");
+        background-size: 100% 100%;
+        left: 50%;
+        top: 2.5vw;
+        width: 400px;
+        height: 500px;
+        padding: 10px;
+        text-align: center;
+        
+    }
+
+}
+
+
+
+.start_ui_button {
+    margin-top: 364px;
+    padding: 0px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fin_ui_button {
+    margin-top: 420px;
     padding: 0px 10px;
     display: flex;
     flex-direction: column;
@@ -541,6 +609,16 @@ left : 실제 이동 값
 #gameover{
     display: none;
 }
+
+input#retry-img-button{
+    display: none;
+    background: url('./image/retry.png') no-repeat;
+    background-size: 100%, 60%;
+    border: none;
+    width: 100px;
+    height: 60px;
+}
+
 
 input#start-img-button{
     display: none;

@@ -124,19 +124,26 @@
 
         
         </div>
-
-        <div class="start_ui">
-            <div class="startpage_img">
-                <div class="start-page">
-                    <div class="title">
-                        <h1>Math Game</h1>
-                    </div>
-                    <div class="ui_button">
-                        <input type="button" class="setting-start-img-button" onclick="setting_game()">
-                        <input type="button" class="gamerule-img-button" onclick="gamerule()">
+        <div id="intro_ui">
+            <div class="start_ui">
+                <div class="startpage_img">
+                    <div class="start-page">
+                        <div class="start_ui_button">
+                            <input type="button" class="setting-start-img-button" onclick="game_start()">
+                            <input type="button" class="gamerule-img-button" onclick="gamerule()">
+                        </div>
                     </div>
                 </div>
-
+            </div>
+        </div>
+        <div id="fin_ui">
+            <div class="end_ui">
+                <div class="gameover_img">
+                    <div class="fin_ui_button">
+                        <input type="button" class="retry-img-button" onclick="retry_game()">
+                        <!--<input type="button" class="gamerule-img-button" onclick="gamerule()">-->
+                    </div>
+                </div>
             </div>
         </div>
 

@@ -1,25 +1,33 @@
-const modal = document.getElementById("modal")
-const gameover_show_re = document.getElementById("gameover")
-const gs = document.getElementById("game-setting")
-const submit_category = document.getElementById("submit-category")
-const submit_category_check = document.getElementById("submit-category_check")
-const check_school_number=document.querySelectorAll('.content span')[2];
-const sp = document.getElementById("start-page")
-const check_imoji = document.getElementById("submit-schoolnumber")
-const check_imoji_check = document.getElementById("submit-schoolnumber_check")
-const check_category=document.querySelectorAll('.content span')[5];
+const url = new URL(window.location.href)
+
+
+// 모달 있을 때 코드 들
+// const modal = document.getElementById("modal")
+// const gameover_show_re = document.getElementById("gameover")
+// const gs = document.getElementById("game-setting")
+// const submit_category = document.getElementById("submit-category")
+// const submit_category_check = document.getElementById("submit-category_check")
+// const check_school_number=document.querySelectorAll('.content span')[2]
+// const sp = document.getElementById("start-page")
+// const check_imoji = document.getElementById("submit-schoolnumber")
+// const check_imoji_check = document.getElementById("submit-schoolnumber_check")
+// const check_category=document.querySelectorAll('.content span')[5]
+
+
 const cursor = document.querySelector('.cursor')
 const holes = [...document.querySelectorAll('.mole')]
-const hole_out = new Array(holes.length).fill(0);
-const mole_ans = new Array(holes.length).fill(0);
+const hole_out = new Array(holes.length).fill(0)
+const mole_ans = new Array(holes.length).fill(0)
 const scoreEl = document.querySelector('.score span')
 const final_score = document.querySelector('.final-score span')
-const TIMER=document.querySelector('.timer span');
-const PB=document.getElementById('problem');
+const TIMER=document.querySelector('.timer span')
+const PB=document.getElementById('problem')
 const game_start_button = document.getElementById("start-img-button")
 const isTouchDevice = (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement);
 
-const url = new URL(window.location.href);
+const intro_ui = document.getElementById("intro_ui")
+const fin_ui = document.getElementById("fin_ui")
+
 
 
 let score = 0
@@ -33,14 +41,16 @@ let start_time = 0
 let game_finish = 0
 let last_game = 0
 let category = 0
-let category_list = ["로그","지수","수열"]
-let before_start_setting = [0,0] // 학번 입력, 게임 유형 선택
+let school_name = ""
+// let category_list = ["로그","지수","수열"]
+// let before_start_setting = [0,0] // 학번 입력, 게임 유형 선택
 let game_play_time = 60
 let problem_score=[0,0]
 let game_record = []
 let params={}
 let pb_wrong_ans=0
 let pb_wrong_answer_tiems=3
+let user_info_ready = 0
 let record_style={
     "category":"",
     "problem":"",
@@ -94,7 +104,7 @@ function fastapi(method,url, params){
     if(method=='post'){
         var xhr = new XMLHttpRequest();
 
-        let pa={"school_name":"운호고등학교"}
+        let pa={"school_name":school_name}
 
         url += "?" + new URLSearchParams(pa)
 
@@ -167,98 +177,103 @@ function ord(v){
 function gamerule(){
 
 }
+// 모달 창 있을 때 코드
+// function setting_game(){
+//     // //gs.style.display = "inline"
+//     // //sp.style.display = "none"
+//     // check_imoji.style.display="none"
+//     // check_imoji_check.style.display="none"
+//     // submit_category.style.display="none"
+//     // submit_category_check.style.display="none"
+//     // check_category.textContent=""
+//     // game_start_button.style.display="none"
 
-function setting_game(){
-    //gs.style.display = "inline"
-    //sp.style.display = "none"
-    check_imoji.style.display="none"
-    check_imoji_check.style.display="none"
-    submit_category.style.display="none"
-    submit_category_check.style.display="none"
-    check_category.textContent=""
-    game_start_button.style.display="none"
-    before_start_setting=[0,0]
+//     /* 수정 후 코드 */
 
-}
+//     intro_ui.style.display="none"
+
+//     before_start_setting=[0,0]
+
+// }
 
 
-function click2start(){
-    params={"school_name" : "운호고등학교"}
-    user_available_check(domain+'/api/user/user-exist/'+String(user_School_Number),params,(json)=>{
-        if(json.user_exit){
-            check_imoji.style.display="inline"
-            check_imoji_check.style.display="inline"
-            check_school_number.textContent = "학번 :"+user_School_Number
-            before_start_setting[0]=1
-            if(before_start_setting[0]==1 && before_start_setting[1]==1){
-                game_start_button.style.display="inline"
-            }
-        }else{
-            before_start_setting[0]=0
-            check_imoji.style.display="inline"
-            check_imoji_check.style.display="none"
-            check_school_number.textContent = "존재하지 않는 학번입니다."
-            game_start_button.style.display="none"
-        }
-    },
-    ()=>{
-        before_start_setting[0]=0
-        check_imoji.style.display="inline"
-        check_imoji_check.style.display="none"
-        check_school_number.textContent = "다시 시도해주세요."
-        game_start_button.style.display="none"
-    })
+// function click2start(){
+//     params={"school_name" : "운호고등학교"}
+//     user_available_check(domain+'/api/user/user-exist/'+String(user_School_Number),params,(json)=>{
+//         if(json.user_exit){
+//             check_imoji.style.display="inline"
+//             check_imoji_check.style.display="inline"
+//             check_school_number.textContent = "학번 :"+user_School_Number
+//             before_start_setting[0]=1
+//             if(before_start_setting[0]==1 && before_start_setting[1]==1){
+//                 game_start_button.style.display="inline"
+//             }
+//         }else{
+//             before_start_setting[0]=0
+//             check_imoji.style.display="inline"
+//             check_imoji_check.style.display="none"
+//             check_school_number.textContent = "존재하지 않는 학번입니다."
+//             game_start_button.style.display="none"
+//         }
+//     },
+//     ()=>{
+//         before_start_setting[0]=0
+//         check_imoji.style.display="inline"
+//         check_imoji_check.style.display="none"
+//         check_school_number.textContent = "다시 시도해주세요."
+//         game_start_button.style.display="none"
+//     })
 
-}
-function set_category(input_category){
-    if(category_list.includes(String(input_category))){
-        category=input_category
-        submit_category.style.display="inline"
-        submit_category_check.style.display="inline"
-        check_category.textContent = "유형 : " + category
-        before_start_setting[1]=1
-        if(before_start_setting[0]==1 && before_start_setting[1]==1){
-            game_start_button.style.display="inline"
-        }
-    }else{
-        alert('올바르지 않은 카테고리')
-    }
+// }
+// function set_category(input_category){
+//     if(category_list.includes(String(input_category))){
+//         category=input_category
+//         submit_category.style.display="inline"
+//         submit_category_check.style.display="inline"
+//         check_category.textContent = "유형 : " + category
+//         before_start_setting[1]=1
+//         if(before_start_setting[0]==1 && before_start_setting[1]==1){
+//             game_start_button.style.display="inline"
+//         }
+//     }else{
+//         alert('올바르지 않은 카테고리')
+//     }
 
-}
+// }
 
-function school_number(e){ // value + ord(keyCode) : 입력한 숫자
-    if(e.keyCode === 13){ //13 이 엔터 입력
-        params={"school_name" : "운호고등학교"}
-        user_available_check(domain+'/api/user/user-exist/'+String(user_School_Number),params,(json)=>{
-            if(json.user_exit){
-                check_imoji.style.display="inline"
-                check_imoji_check.style.display="inline"
-                check_school_number.textContent = "학번 :"+user_School_Number
-                before_start_setting[0]=1
-                if(before_start_setting[0]==1 && before_start_setting[1]==1){
-                    game_start_button.style.display="inline"
-                }
-            }else{
-                before_start_setting[0]=0
-                check_imoji.style.display="inline"
-                check_imoji_check.style.display="none"
-                check_school_number.textContent = "존재하지 않는 학번입니다."
-                game_start_button.style.display="none"
-            }
-        },
-        ()=>{
-            before_start_setting[0]=0
-            check_imoji.style.display="inline"
-            check_imoji_check.style.display="none"
-            check_school_number.textContent = "다시 시도해주세요."
-            game_start_button.style.display="none"
-        })
+// function school_number(e){ // value + ord(keyCode) : 입력한 숫자
+//     if(e.keyCode === 13){ //13 이 엔터 입력
+//         params={"school_name" : "운호고등학교"}
+//         user_available_check(domain+'/api/user/user-exist/'+String(user_School_Number),params,(json)=>{
+//             if(json.user_exit){
+//                 check_imoji.style.display="inline"
+//                 check_imoji_check.style.display="inline"
+//                 check_school_number.textContent = "학번 :"+user_School_Number
+//                 before_start_setting[0]=1
+//                 if(before_start_setting[0]==1 && before_start_setting[1]==1){
+//                     game_start_button.style.display="inline"
+//                 }
+//             }else{
+//                 before_start_setting[0]=0
+//                 check_imoji.style.display="inline"
+//                 check_imoji_check.style.display="none"
+//                 check_school_number.textContent = "존재하지 않는 학번입니다."
+//                 game_start_button.style.display="none"
+//             }
+//         },
+//         ()=>{
+//             before_start_setting[0]=0
+//             check_imoji.style.display="inline"
+//             check_imoji_check.style.display="none"
+//             check_school_number.textContent = "다시 시도해주세요."
+//             game_start_button.style.display="none"
+//         })
         
         
-    }else{
-        user_School_Number = document.getElementById("school_number").value + ord(e.keyCode);
-    }
-}
+//     }else{
+//         user_School_Number = document.getElementById("school_number").value + ord(e.keyCode);
+//     }
+// }
 
 function min(a,b){
     if(a>b)return b
@@ -659,10 +674,33 @@ function pd_mole(i){
 }
 
 function game_start(){
-    modal.style.display="none"
-    gs.style.display="none"
-    sp.style.display="none"
-    gameover_show_re.style.display="none"
+
+
+
+    /* 게임 시작 버튼을 누르면 실행됨 */
+    /* 수정 전 코드 */
+
+
+    // modal.style.display="none"
+    // gs.style.display="none"
+    // sp.style.display="none"
+    // gameover_show_re.style.display="none"
+
+    //console.log('START!!!!!')
+    //console.log(user_info_ready)
+
+    if(!user_info_ready)return;
+
+
+    /* 수정 후 코드 */
+
+    console.log('GAME START!!!')
+    intro_ui.style.display="none"
+    fin_ui.style.display="none"
+    
+    
+
+
     score = 0
     answer = 0 
     game_finish = 0
@@ -692,8 +730,8 @@ function game_start(){
     TIMER.textContent = game_play_time
     timer_value= setInterval(()=>{
         TIMER.textContent = (game_play_time-((new Date().getTime() - start_time)/1000)).toFixed(2)
-        if(TIMER.textContent<=0){
-            if(game_finish===0){
+        if(TIMER.textContent<=0){ // game over
+            if(game_finish===0){// game over 즉시
                 game_finish = 1
                 //console.log('Game Finish!!')
                 game_record.push(record_style)
@@ -728,16 +766,19 @@ function game_start(){
                     "score": score,
                     "detail": game_record
                 });
+                console.log(params)
+                console.log(game_record)
                 
                 fastapi('post',domain+"/api/record/create/"+String(user_School_Number), params)
 
-            }else{
+            }else{ // game over 이후 정지
                 clearTimeout(timer_value)
-                modal.style.display = ""
-                gs.style.display = "none"
-                sp.style.display = "none"
-                gameover_show_re.style.display = "inline"
-                final_score.textContent=score
+                fin_ui.style.display = "inline"
+                // modal.style.display = ""
+                // gs.style.display = "none"
+                // sp.style.display = "none"
+                // gameover_show_re.style.display = "inline"
+                // final_score.textContent=score
             }
         }
     },1)
@@ -750,10 +791,11 @@ function game_start(){
 }
 
 function retry_game(){
-    modal.style.display = ""
-    gs.style.display = "none"
-    sp.style.display = "inline"
-    gameover_show_re.style.display = "none"
+    game_start()
+    // modal.style.display = ""
+    // gs.style.display = "none"
+    // sp.style.display = "inline"
+    // gameover_show_re.style.display = "none"
 
 }
 
@@ -970,22 +1012,41 @@ window.addEventListener('touchend', (e) => {
 })
 
 window.addEventListener('load', () => {
+
+    let c_token = hasParam('token') // 학번
+    let c_type = hasParam('type') // 게임 종류
+    let c_school_name = hasParam('school')
+    // 앞에 있는거만 반응함, & 를 쓰면 둘다 작용
+
+
+    //console.log('----------')
+    //console.log(c_token,c_type,c_school_name)
+
+    if(c_token && c_type && c_school_name){
+        user_School_Number = getUrlParam('token');
+        category = getUrlParam('type');
+        school_name = getUrlParam('school');
+        user_info_ready = 1;
+        //console.log('change',user_info_ready);
+    }
     
-    if(hasParam('token')) {
-        let token = getUrlParam('token');
-        setting_game();
+    // }else if(c_token){
+    //     //console.log('TOKEN!!!')
+    //     let token = getUrlParam('token');
+    //     setting_game();
 
-        user_School_Number = token;
-        document.querySelector('#school_number').value = token;
-        school_number({keyCode: 13});
-    }
+    //     user_School_Number = token;
+    //     document.querySelector('#school_number').value = token;
+    //     //school_number({keyCode: 13});
 
-    if(hasParam('type')) {
-        let type = getUrlParam('type');
-        set_category(type);
-    }
+    // }else if(c_type){
+    //     //console.log('TYPE!!!')
+    //     let type = getUrlParam('type');
+    //     set_category(type);
+    // }
 
-    if(hasParam('token') && hasParam('type')) game_start();
+
+    //http://127.0.0.1:5501/?token=20402?type=%EC%A7%80%EC%88%98
 })
 
 function hasParam(key) {
