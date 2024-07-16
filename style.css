@@ -235,9 +235,21 @@ left : 실제 이동 값
     justify-content: center;
     align-items: center;
 }
+.final-score {
+    margin-top: 240px;
+    padding: 0px 10px;
+    color: black;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 .fin_ui_button {
-    margin-top: 420px;
+    margin-top: 80px;
     padding: 0px 10px;
     display: flex;
     flex-direction: column;
@@ -610,13 +622,12 @@ left : 실제 이동 값
     display: none;
 }
 
-input#retry-img-button{
-    display: none;
+input.retry-img-button{
     background: url('./image/retry.png') no-repeat;
-    background-size: 100%, 60%;
+    background-size: contain;
     border: none;
-    width: 100px;
-    height: 60px;
+    width: 240px;
+    height: 55px;
 }
 
 

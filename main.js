@@ -694,7 +694,7 @@ function game_start(){
 
     /* 수정 후 코드 */
 
-    console.log('GAME START!!!')
+    //console.log('GAME START!!!')
     intro_ui.style.display="none"
     fin_ui.style.display="none"
     
@@ -766,8 +766,8 @@ function game_start(){
                     "score": score,
                     "detail": game_record
                 });
-                console.log(params)
-                console.log(game_record)
+                //console.log(params)
+                //console.log(game_record)
                 
                 fastapi('post',domain+"/api/record/create/"+String(user_School_Number), params)
 
@@ -778,7 +778,7 @@ function game_start(){
                 // gs.style.display = "none"
                 // sp.style.display = "none"
                 // gameover_show_re.style.display = "inline"
-                // final_score.textContent=score
+                final_score.textContent=score
             }
         }
     },1)
