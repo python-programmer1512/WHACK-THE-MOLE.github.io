@@ -64,6 +64,9 @@ let audio = new Audio('./audio/atteck.mp3');
 audio.volume = 0.5;
 let correct = new Audio('./audio/correct.mp3');
 
+let problem_list = []
+
+
 const domain = "https://mathgame.bass9030.dev" //"http://127.0.0.1:8000"//
 
 function abs(a){
@@ -349,265 +352,317 @@ function new_pb(){
     
     
     */
-    let problem="";
-    let rdm=0;
+   let check = 0
 
-    if(category==="수열"){
-        let a_1 = rand(2,17)
-        let number_cnt=rand(3,6)
-        rdm=rand(1,3)
-        /*
-        let record_style={
-            "category":"",
-            "problem":"",
-            "problem_answer":0,
-            "user_answers":""
+    if(problem_list.length<10){
+        //console.log('!!!')
+        //add_problem_list() // 비동기 과정 때문에 값이 없을 때 밑에 코드가 실행됨 -> 0 일때는 추가될때까지 기다렸다가 가야 될듯
+        params={
+            "school_name" : school_name,
+            "cnt" : 10,
+            "school_number" : user_School_Number
         }
-        */
-        if(rdm==1){
-            /*공차 or 공비 구하기 */
-            if(rand(1,2)==1){
-                /*등비 */
-                let r=rand(2,5)
-                if(rand(1,2)==1)r*=-1
-                for(var i=0;i<number_cnt;i++){
-                    
-                    if(number_cnt>=3 && i==parseInt(number_cnt/2))problem+= "\\\\ "
-                    problem+="a_"+(i+1)+" = "+(a_1*pow(r,i))+", "
-                }
-                problem+="r = ?"
-                record_style["category"]="공비 구하기"
-                answer=r
-                
-            }else{
-                /*등차 */
-                let d=rand(1,5)
-                if(rand(1,2)==1)d*=-1
-                for(var i=0;i<number_cnt;i++){
-                    if(number_cnt>=3 && i==parseInt(number_cnt/2))problem+= "\\\\ "
-                    problem+="a_"+(i+1)+" = "+(a_1+d*i)+", "
-                }
-                problem+="d = ?"
-                record_style["category"]="공차 구하기"
-                answer=d
-            }
-            problem_score=[1,-1] // 맞추면 1점, 틀리면 1점
+        user_available_check(domain+'/api/problem/problem-emit',params,(json)=>{
+            
+            //console.log("problem_list ",json.problem_list)
+            for(const one_problem in json.problem_list){
+                //console.log("one_problem ",one_problem)
+                problem_list.push(json.problem_list[one_problem])
 
-        }else if(rdm==2){
-            /*빈칸 */
-            let idx=rand(0,number_cnt-1)
-            if(rand(1,2)==1){
-                /*등비 */
-                let r=rand(2,5)
-                if(rand(1,2)==1)r*=-1
-                for(var i=0;i<number_cnt;i++){
-                    if(number_cnt>=3 && i==parseInt(number_cnt/2))problem+= "\\\\ "
-                    if(i===idx){
-                        problem+="a_"+(idx+1)+" = ?"
-                    }else{
-                        problem+="a_"+(i+1)+" = "+(a_1*pow(r,i))+", " 
+            }
+            if(check==0){
+                pb_create()
+            }
+        },
+        ()=>{
+        })
+        if(problem_list.length!=0){
+            check = 1
+            pb_create()
+        }
+    }else{
+        pb_create()
+    }
+
+}
+function pb_create(){
+
+    let problem=""
+    let rdm=0
+
+    //console.log('--!-----!--')
+    //console.log(problem_list)
+
+    if(problem_list[0].problem_level!=5){
+
+        if(category==="수열"){
+            let a_1 = rand(2,17)
+            let number_cnt=rand(3,6)
+            rdm=rand(1,3)
+            /*
+            let record_style={
+                "category":"",
+                "problem":"",
+                "problem_answer":0,
+                "user_answers":""
+            }
+            */
+            if(rdm==1){
+                /*공차 or 공비 구하기 */
+                if(rand(1,2)==1){
+                    /*등비 */
+                    let r=rand(2,5)
+                    if(rand(1,2)==1)r*=-1
+                    for(var i=0;i<number_cnt;i++){
+                        
+                        if(number_cnt>=3 && i==parseInt(number_cnt/2))problem+= "\\\\ "
+                        problem+="a_"+(i+1)+" = "+(a_1*pow(r,i))+", "
                     }
-                }
- 
-                record_style["category"]="빈칸 구하기(등비)"
-                answer=a_1*(r**idx)
-            }else{
-                /*등차 */
-                let d=rand(1,5)
-                if(rand(1,2)==1)d*=-1
-                for(var i=0;i<number_cnt;i++){
-                    if(number_cnt>=3 && i==parseInt(number_cnt/2))problem+= "\\\\ "
-                    if(i===idx){
-                        problem+="a_"+(idx+1)+" = ?"
-                    }else{
+                    problem+="r = ?"
+                    record_style["category"]="공비 구하기"
+                    answer=r
+                    
+                }else{
+                    /*등차 */
+                    let d=rand(1,5)
+                    if(rand(1,2)==1)d*=-1
+                    for(var i=0;i<number_cnt;i++){
+                        if(number_cnt>=3 && i==parseInt(number_cnt/2))problem+= "\\\\ "
                         problem+="a_"+(i+1)+" = "+(a_1+d*i)+", "
                     }
+                    problem+="d = ?"
+                    record_style["category"]="공차 구하기"
+                    answer=d
                 }
-
-                record_style["category"]="빈칸 구하기(등차)"
-                answer=a_1+d*idx
-            }
-            problem_score=[3,-2]
-
-        }else{
-            /*n번째 항 */
-            let N=rand(number_cnt+3,number_cnt+20)
-            /*등차 */
-            let d=rand(1,5)
-            if(rand(1,2)==1)d*=-1
-            let first_a = rand(1,number_cnt-1)
-            let second_a = rand(first_a+1,number_cnt)
-            problem = "a_"+(first_a)+" = "+(a_1+d*(first_a-1))+", "+"a_"+(second_a)+" = "+(a_1+d*(second_a-1))+", "+"a_{"+(N)+ "} = ?"
-            record_style["category"]="n번째 값 구하기"
-            answer=a_1+d*(N-1)
-            problem_score=[5,-2]
-            
-        }
-    }else if(category=="로그"){
-        //"log_a{b}"
-        /*
-        1. 로그 값 맞추기
-        2. 로그 함수(b부분에 방정식 넣기)
-        3. 값나타내고 로그안의 ? 맞추기
-        */
-        /*
-        let record_style={
-            "category":"",
-            "problem":"",
-            "problem_answer":0,
-            "user_answers":""
-        }
-        */
-        rdm=rand(1,3)
-        
-        if(rdm==1){
-            let a = rand(2,4)
-            let k = rand(0,4)
-            problem=log_create(a,pow(a,k))+" = ?"
-            record_style["category"]="로그 값 맞추기"
-            answer=k
-            problem_score=[1,-1]
-        }else if(rdm==2){
-            let a= rand(2,4)
-            let k = rand(1,4)
-            let value = rand(1,3)
-            let B = rand(-3,3)
-            if(value==1){
-                // 밑이 1차함수
-                if(B<0){
-                    problem=log_create("x-"+(-B),pow(a,k))+" = "+(k)
-                }else{
-                    problem=log_create("x+"+B,pow(a,k))+" = "+(k)
-                }
-                answer=a-B
-                problem_score=[3,-2]
-            }else if(value==2){
-                // 지수가 1차함수
-                if(B<0){
-                    problem=log_create(a,pow(a,k))+" = "+"x-"+(-B)
-                }else{
-                    problem=log_create(a,pow(a,k))+" = "+"x+"+(B)
-                }
-                answer=k-B
-                problem_score=[3,-2]
-            }else if(value==3){
-                // 진수가 1차함수
-                if(B<0){
-                    problem=log_create(a,"("+"x-"+(-B)+")")+" = "+ (k)
-                }else{
-                    if(B==0){
-                        problem=log_create(a,"x")+" = "+ (k)
-                    }else{
-                        problem=log_create(a,"("+"x+"+(B)+")")+" = "+ (k)
+                problem_score=[1,-1] // 맞추면 1점, 틀리면 1점
+    
+            }else if(rdm==2){
+                /*빈칸 */
+                let idx=rand(0,number_cnt-1)
+                if(rand(1,2)==1){
+                    /*등비 */
+                    let r=rand(2,5)
+                    if(rand(1,2)==1)r*=-1
+                    for(var i=0;i<number_cnt;i++){
+                        if(number_cnt>=3 && i==parseInt(number_cnt/2))problem+= "\\\\ "
+                        if(i===idx){
+                            problem+="a_"+(idx+1)+" = ?"
+                        }else{
+                            problem+="a_"+(i+1)+" = "+(a_1*pow(r,i))+", " 
+                        }
                     }
+    
+                    record_style["category"]="빈칸 구하기(등비)"
+                    answer=a_1*(r**idx)
+                }else{
+                    /*등차 */
+                    let d=rand(1,5)
+                    if(rand(1,2)==1)d*=-1
+                    for(var i=0;i<number_cnt;i++){
+                        if(number_cnt>=3 && i==parseInt(number_cnt/2))problem+= "\\\\ "
+                        if(i===idx){
+                            problem+="a_"+(idx+1)+" = ?"
+                        }else{
+                            problem+="a_"+(i+1)+" = "+(a_1+d*i)+", "
+                        }
+                    }
+    
+                    record_style["category"]="빈칸 구하기(등차)"
+                    answer=a_1+d*idx
                 }
-                answer=pow(a,k)-B
-                problem_score=[5,-2]
-            }
-            problem+="\\\\ x = ?"
-            record_style["category"]="로그 함수의 x 맞추기"
-
-        }else if(rdm==3){
-            let a= rand(2,4)
-            if(rand(1,2)==1){
-                let k = rand(1,4)
-                problem=log_create("?",pow(a,k))+" = "+(k)
-                answer=a
+                problem_score=[3,-2]
+    
             }else{
-                let k = rand(0,3)
-                problem=log_create(a,"?")+ " = "+ (k)
-                answer=pow(a,k)
+                /*n번째 항 */
+                let N=rand(number_cnt+3,number_cnt+20)
+                /*등차 */
+                let d=rand(1,5)
+                if(rand(1,2)==1)d*=-1
+                let first_a = rand(1,number_cnt-1)
+                let second_a = rand(first_a+1,number_cnt)
+                problem = "a_"+(first_a)+" = "+(a_1+d*(first_a-1))+", "+"a_"+(second_a)+" = "+(a_1+d*(second_a-1))+", "+"a_{"+(N)+ "} = ?"
+                record_style["category"]="n번째 값 구하기"
+                answer=a_1+d*(N-1)
+                problem_score=[5,-2]
+                
+            }
+        }else if(category=="로그"){
+            //"log_a{b}"
+            /*
+            1. 로그 값 맞추기
+            2. 로그 함수(b부분에 방정식 넣기)
+            3. 값나타내고 로그안의 ? 맞추기
+            */
+            /*
+            let record_style={
+                "category":"",
+                "problem":"",
+                "problem_answer":0,
+                "user_answers":""
+            }
+            */
+            rdm=rand(1,3)
+            
+            if(rdm==1){
+                let a = rand(2,4)
+                let k = rand(0,4)
+                problem=log_create(a,pow(a,k))+" = ?"
+                record_style["category"]="로그 값 맞추기"
+                answer=k
+                problem_score=[1,-1]
+            }else if(rdm==2){
+                let a= rand(2,4)
+                let k = rand(1,4)
+                let value = rand(1,3)
+                let B = rand(-3,3)
+                if(value==1){
+                    // 밑이 1차함수
+                    if(B<0){
+                        problem=log_create("x-"+(-B),pow(a,k))+" = "+(k)
+                    }else{
+                        problem=log_create("x+"+B,pow(a,k))+" = "+(k)
+                    }
+                    answer=a-B
+                    problem_score=[3,-2]
+                }else if(value==2){
+                    // 지수가 1차함수
+                    if(B<0){
+                        problem=log_create(a,pow(a,k))+" = "+"x-"+(-B)
+                    }else{
+                        problem=log_create(a,pow(a,k))+" = "+"x+"+(B)
+                    }
+                    answer=k-B
+                    problem_score=[3,-2]
+                }else if(value==3){
+                    // 진수가 1차함수
+                    if(B<0){
+                        problem=log_create(a,"("+"x-"+(-B)+")")+" = "+ (k)
+                    }else{
+                        if(B==0){
+                            problem=log_create(a,"x")+" = "+ (k)
+                        }else{
+                            problem=log_create(a,"("+"x+"+(B)+")")+" = "+ (k)
+                        }
+                    }
+                    answer=pow(a,k)-B
+                    problem_score=[5,-2]
+                }
+                problem+="\\\\ x = ?"
+                record_style["category"]="로그 함수의 x 맞추기"
+    
+            }else if(rdm==3){
+                let a= rand(2,4)
+                if(rand(1,2)==1){
+                    let k = rand(1,4)
+                    problem=log_create("?",pow(a,k))+" = "+(k)
+                    answer=a
+                }else{
+                    let k = rand(0,3)
+                    problem=log_create(a,"?")+ " = "+ (k)
+                    answer=pow(a,k)
+                }
+                record_style["category"]="로그 안의 값 맞추기"
+                problem_score=[2,-2]
+            }
+            
+    
+        }else if(category=="지수"){
+            //"log_a{b}"
+            /*
+            1. 루트 풀기(제곱근)
+            2. 지수 함수 값 맞추기
+            3. 두 지수 함수 비교
+            */
+            /*
+            let record_style={
+                "category":"",
+                "problem":"",
+                "problem_answer":0,
+                "user_answers":""
             }
             record_style["category"]="로그 안의 값 맞추기"
-            problem_score=[2,-2]
-        }
-        
-
-    }else if(category=="지수"){
-         //"log_a{b}"
-        /*
-        1. 루트 풀기(제곱근)
-        2. 지수 함수 값 맞추기
-        3. 두 지수 함수 비교
-        */
-        /*
-        let record_style={
-            "category":"",
-            "problem":"",
-            "problem_answer":0,
-            "user_answers":""
-        }
-        record_style["category"]="로그 안의 값 맞추기"
-        */
-        let rdm=rand(1,3)
-        problem=""
-        if(rdm==1){
-            let root=rand(1,3)
-            let a = rand(1,3)
-            let answer_value=rand(1,3)
-            let root_value=0
-            let a_value=1
-            let stack=[]
-            for(var idx=0;idx<root;idx++){
-                root_value=rand(2,3)
-                if(a_value*root_value>20){
-                    root=idx
-                    break
-                }else{
-                    stack.push(root_value)
-                    a_value*=root_value
+            */
+            let rdm=rand(1,3)
+            problem=""
+            if(rdm==1){
+                let root=rand(1,3)
+                let a = rand(1,3)
+                let answer_value=rand(1,3)
+                let root_value=0
+                let a_value=1
+                let stack=[]
+                for(var idx=0;idx<root;idx++){
+                    root_value=rand(2,3)
+                    if(a_value*root_value>20){
+                        root=idx
+                        break
+                    }else{
+                        stack.push(root_value)
+                        a_value*=root_value
+                    }
                 }
+                let last_value="{"+(a)+"}^{"+(a_value*answer_value)+"}"
+                for(var idx=0;idx<root;idx++){
+                    last_value=sqrt_create(stack[idx],last_value)
+                }
+                problem=last_value+" = ?"
+                answer=pow(a,answer_value)
+                record_style["category"]="제곱근 계산"
+                problem_score=[5,-2]
+                
+    
+            }else if(rdm==2){
+                let a=rand(-4,4)
+                let b=rand(0,4)
+                if(a==0 && b==0){
+                    b=1
+                }
+                if(a>0){
+                    problem="{"+(a)+"}^{"+(b)+"} = ?"
+                }else{
+                    problem="{("+(a)+")}^{"+(b)+"} = ?"
+                }
+                record_style["category"]="지수 함수 값 계산하기"
+                
+                answer=pow(a,b)
+                if(abs(answer)<=10){
+                    problem_score=[1,-1]
+                }else if(abs(answer)<=30){
+                    problem_score=[2,-2]
+                }else if(abs(answer)<=100){
+                    problem_score=[2,-1]
+                }else{
+                    problem_score=[3,-2]
+                }
+    
+            }else if(rdm==3){
+                let a = rand(2,4)
+                let A = rand(-3,3)
+                let B_1 = rand(-3,4)
+                let B_2 = rand(-3,4)
+                
+                problem = "{"+a+"}^{"+(linear_func_create(A,B_1))+"} = {"+a+"}^{"+(linear_func_create(A+1,B_2))+"} \\\\ x = ?"
+                answer=B_1-B_2
+                record_style["category"]="식을 만족하는 x 값 찾기"
+                problem_score=[4,-2]
+    
             }
-            let last_value="{"+(a)+"}^{"+(a_value*answer_value)+"}"
-            for(var idx=0;idx<root;idx++){
-                last_value=sqrt_create(stack[idx],last_value)
-            }
-            problem=last_value+" = ?"
-            answer=pow(a,answer_value)
-            record_style["category"]="제곱근 계산"
-            problem_score=[5,-2]
-            
-
-        }else if(rdm==2){
-            let a=rand(-4,4)
-            let b=rand(0,4)
-            if(a==0 && b==0){
-                b=1
-            }
-            if(a>0){
-                problem="{"+(a)+"}^{"+(b)+"} = ?"
-            }else{
-                problem="{("+(a)+")}^{"+(b)+"} = ?"
-            }
-            record_style["category"]="지수 함수 값 계산하기"
-            
-            answer=pow(a,b)
-            if(abs(answer)<=10){
-                problem_score=[1,-1]
-            }else if(abs(answer)<=30){
-                problem_score=[2,-2]
-            }else if(abs(answer)<=100){
-                problem_score=[2,-1]
-            }else{
-                problem_score=[3,-2]
-            }
-
-        }else if(rdm==3){
-            let a = rand(2,4)
-            let A = rand(-3,3)
-            let B_1 = rand(-3,4)
-            let B_2 = rand(-3,4)
-            
-            problem = "{"+a+"}^{"+(linear_func_create(A,B_1))+"} = {"+a+"}^{"+(linear_func_create(A+1,B_2))+"} \\\\ x = ?"
-            answer=B_1-B_2
-            record_style["category"]="식을 만족하는 x 값 찾기"
-            problem_score=[4,-2]
-
         }
+
+    }else{
+        problem=problem_list[0].category
+        answer=problem_list[0].answer
+        record_style["category"] = problem_list[0].category
+        problem_score=[problem_list[0].problem_level*2 - 1,-problem_list[0].problem_level]
+
+        //console.log('---@----@----')
+        //console.log(record_style["problem"],record_style["problem_answer"])
+
+
     }
-    //console.log(problem)
     record_style["problem"]=problem
     record_style["problem_answer"]=String(answer)
+
     katex.render(record_style["problem"], PB, { 
         throwOnError:false,
         strict: true
@@ -615,7 +670,30 @@ function new_pb(){
     //console.log(katex)
     //PB.textContent = problem
 
+    problem_list.shift()
 }
+
+
+
+
+// function add_problem_list(){
+//     if(problem_list.size<8){
+//         params={
+//             "school_name" : school_name,
+//             "cnt" : 10,
+//             "school_number" : user_School_Number
+//         }
+//         user_available_check(domain+'/api/problem/problem-emit',params,(json)=>{
+//             problem_list.push(json.problem_list)
+//         },
+//         ()=>{
+//         })
+
+//     }
+// }
+
+
+
 function new_ans(i){
     let random=rand(1,percent[1])
     if(random<=percent[0]){
