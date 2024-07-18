@@ -249,7 +249,7 @@ left : 실제 이동 값
 
 
 .fin_ui_button {
-    margin-top: 80px;
+    margin-top: 55px;
     padding: 0px 10px;
     display: flex;
     flex-direction: column;
@@ -624,6 +624,15 @@ left : 실제 이동 값
 
 input.retry-img-button{
     background: url('./image/retry.png') no-repeat;
+    background-size: contain;
+    border: none;
+    width: 240px;
+    height: 55px;
+}
+
+
+input.home-img-button{
+    background: url('./image/home_button.png') no-repeat;
     background-size: contain;
     border: none;
     width: 240px;

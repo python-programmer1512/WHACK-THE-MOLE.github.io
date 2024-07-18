@@ -1054,7 +1054,7 @@ if(!isTouchDevice){
     cursor.classList.add('mousepointer-on')
 
     window.addEventListener('mousedown', () => {
-        console.log('mousedown')
+        //console.log('mousedown')
         audio.pause();
         audio.currentTime = 0;
         audio.play();
