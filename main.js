@@ -360,8 +360,10 @@ function new_pb(){
         params={
             "school_name" : school_name,
             "cnt" : 10,
-            "school_number" : user_School_Number
+            "school_number" : user_School_Number,
+            "category" : category
         }
+        // emit 에서 카테고리 추가해야됨
         user_available_check(domain+'/api/problem/problem-emit',params,(json)=>{
             
             //console.log("problem_list ",json.problem_list)
@@ -393,7 +395,8 @@ function pb_create(){
     //console.log('--!-----!--')
     //console.log(problem_list)
 
-    if(problem_list[0].problem_level!=5){
+    if(problem_list[0].problem_level!=5){ // ==4
+        
 
         if(category==="수열"){
             let a_1 = rand(2,17)
@@ -582,7 +585,7 @@ function pb_create(){
             }
             record_style["category"]="로그 안의 값 맞추기"
             */
-            let rdm=rand(1,3)
+            rdm=rand(1,3)
             problem=""
             if(rdm==1){
                 let root=rand(1,3)
@@ -647,10 +650,130 @@ function pb_create(){
                 problem_score=[4,-2]
     
             }
+        }else if(category=="극한"){
+            //console.log('!!!!!!!')
+            // http://127.0.0.1:5501/?token=20402&type=%EA%B7%B9%ED%95%9C&school=%EC%9A%B4%ED%98%B8%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90
+
+            // https://namu.wiki/w/%EB%82%98%EB%AC%B4%EC%9C%84%ED%82%A4:%EB%AC%B8%EB%B2%95%20%EB%8F%84%EC%9B%80%EB%A7%90/%EC%8B%AC%ED%99%94/TeX
+
+            rdm=rand(1,3)
+            problem=""
+
+            if(rdm==1){ // 1. 정수로 갈때 극한 값 찾기(1,2차, 유리함수는 보류) (명칭 : 극한값 찾기(정수))
+                // lim(x->k) ax+b = ? 형태
+                // 1차,2차,유리함수 다 형태를 다르게 해야되서 다 다른 문제로 나눠야됨
+                // 일단 1차만
+
+                // 수정중
+
+                // "io/?token={$school_number}&type={category_name}&school={$school_name}"
+
+                //console.log('$$')
+                let k = rand(-4,4)
+                let a = rand(-4,4)
+                let b = rand(-4,4)
+
+                // \lim_{x \to 2} (ax+b)
+                // "\\lim\\limits_{x \\to 2}"
+
+                problem="\\lim\\limits_{x \\to "+(k)+"} ("+linear_func_create(a,b)+") = {?}"
+                //console.log(problem)
+                answer=a*k+b
+                record_style["category"]="극한값 찾기(정수)"
+                problem_score=[2,-1]
+                
+    
+            }else if(rdm==2){
+
+
+                // https://katex.org/
+                //console.log('ADSF!@#!@#')
+                // 극한 값 찾기 (inf)
+                //  lim(x->inf) ((ax+b)/(cx+d)) = ?
+
+                // 수정중
+
+                // "io/?token={$school_number}&type={category_name}&school={$school_name}"
+
+                //console.log('$$')
+                let k = rand(-4,4)
+                let c = 0
+                if(rand(1,2)==1){
+                    c =rand(1,5)
+                }else{
+                    c = rand(-5,-1)
+                }
+
+                let b = rand(-4,4)
+                let d = rand(-4,4)
+                let alpha = rand(-7,7)
+
+                // \lim_{x \to 2} (ax+b)
+                // "\\lim\\limits_{x \\to 2}"
+
+                problem="\\lim\\limits_{x \\to \\infty} {"+linear_func_create(alpha*c,b)+" \\over "+linear_func_create(c,d)+"} = {?}"
+                //console.log(problem)
+                answer=alpha
+                record_style["category"]="극한 값 찾기(inf)"
+                problem_score=[2,-1]
+
+            }else if(rdm==3){
+                // 조건 나눠서 미지수 찾기,
+                // - ax+b (x>e) , cx+d (x<=e) || ax^2+bx+c (x>d) , e (x<=d) 의 형태
+
+                let e = rand(-5,5)
+                let ran=rand(3,3)
+                if(ran==1 || ran==3){
+                    // a
+                    // a = (ce+d-b)/e
+                    // e*alpha = d-b, b = d - e*alpha
+                    e = abs(e)
+                    let alpha = rand(-3,3)
+                    let d = rand(-3,3)
+                    let b = d - e*alpha
+                    let c = rand(-3,3)
+                    answer = c + alpha
+
+                    if(ran==1){
+                        problem="{\\begin{cases}"+ "k" +linear_func_create(1,b) + " & (x<"+e+") \\\\ " +linear_func_create(c,d) +" & (x>="+e+") \\end{cases}} \\quad  k = {?}  \\\\ \\text{(x="+e+" 에서 수렴)}"
+
+                    }else{
+                        problem="{\\begin{cases}" + linear_func_create(c,d) + " & (x<"+e+") \\\\ " + "k" +linear_func_create(1,b) +" & (x>="+e+") \\end{cases}} \\quad  k = {?}  \\\\ \\text{(x="+e+" 에서 수렴)}"
+                    }
+        
+
+                }else if(ran==2){
+                    // b
+                    let a = rand(-3,3)
+                    let c = rand(-3,3)
+                    let d = rand(-3,3)
+                    answer = c*e+d-a*e
+
+                    problem="{\\begin{cases}"+ linear_func_create(a,0)+' + k' + " & (x<"+e+") \\\\ " +linear_func_create(c,d) +" & (x>="+e+") \\end{cases}} \\quad  k = {?}  \\\\ \\text{(x="+e+" 에서 수렴)}"
+
+                }else if(ran==4){
+                    // d
+                    let a = rand(-3,3)
+                    let c = rand(-3,3)
+                    let b = rand(-3,3)
+                    answer = a*e+b-c*e
+                    problem="{\\begin{cases}"+ linear_func_create(a,b) + " & (x<"+e+") \\\\ " +linear_func_create(c,0)+' + k' +" & (x>="+e+") \\end{cases}} \\quad  k = {?} \\\\ \\text{(x="+e+" 에서 수렴)}"
+
+                }
+
+                // \lim_{x \to 2} (ax+b)
+                // "\\lim\\limits_{x \\to 2}"
+
+                //console.log(problem)
+                record_style["category"]="조건 나눠서 미지수 찾기"
+                problem_score=[5,-2]
+    
+            }
         }
 
     }else{
-        problem=problem_list[0].category
+
+        problem=problem_list[0].problem
         answer=problem_list[0].answer
         record_style["category"] = problem_list[0].category
         problem_score=[problem_list[0].problem_level*2 - 1,-problem_list[0].problem_level]
@@ -660,6 +783,9 @@ function pb_create(){
 
 
     }
+
+    //console.log('!@#!@#!@#')
+    //console.log(problem,answer)
     record_style["problem"]=problem
     record_style["problem_answer"]=String(answer)
 
@@ -667,6 +793,15 @@ function pb_create(){
         throwOnError:false,
         strict: true
     });
+    if(category=="극한"){
+        if(rdm!=3){
+            PB.style.fontSize="130%"
+        }else{
+            PB.style.fontSize="100%"
+        }
+    }else{
+        PB.style.fontSize="110%"
+    }
     //console.log(katex)
     //PB.textContent = problem
 
@@ -1097,14 +1232,16 @@ window.addEventListener('load', () => {
     // 앞에 있는거만 반응함, & 를 쓰면 둘다 작용
 
 
-    //console.log('----------')
-    //console.log(c_token,c_type,c_school_name)
+    console.log('----------')
+    console.log(c_token,c_type,c_school_name)
+    
 
     if(c_token && c_type && c_school_name){
         user_School_Number = getUrlParam('token');
         category = getUrlParam('type');
         school_name = getUrlParam('school');
         user_info_ready = 1;
+        console.log(user_School_Number,category,school_name)
         //console.log('change',user_info_ready);
     }
     

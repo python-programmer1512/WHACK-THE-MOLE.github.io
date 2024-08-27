@@ -50,8 +50,8 @@ left : 실제 이동 값
     pointer-events: none;
     text-align: center;
     color:black;
-    font-size:100%;
-    transform: translateY(40px);
+    font-size:110%;
+    transform: translateY(30px);
 }
 
 .board{
