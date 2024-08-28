@@ -46,6 +46,31 @@ left : 실제 이동 값
 
 }
 
+#fever{
+    margin-top: 5px;
+    width: 300px;
+    height: 30px;
+}
+
+
+
+#fever {
+    appearance: none;
+}
+#fever::-webkit-progress-bar {
+    background:#f0f0f0;
+    border-radius:10px;
+    box-shadow: inset 3px 3px 10px #ccc;
+}
+#fever::-webkit-progress-value {
+    border-radius:10px;
+    background: #1D976C;
+    background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);
+    background: linear-gradient(to right, #93F9B9, #1D976C);
+
+}
+
+
 #problem{
     pointer-events: none;
     text-align: center;
@@ -481,6 +506,15 @@ left : 실제 이동 값
     position: relative;
     /*transform: translateY(50%) translateY(170px) translateY(85vw);*/
     font-size: 1.5em;
+    color: black;
+}
+
+.fever{
+    pointer-events: none;
+    text-align: left;
+    position: relative;
+    /*transform: translateY(50%) translateY(170px) translateY(85vw);*/
+    font-size: 1.2em;
     color: black;
 }
 

@@ -7,6 +7,10 @@
         <link rel="stylesheet" href="style.css">
         <title>Whack A Mole</title>
         <!-- KaTeX CSS 파일 추가 -->
+        <script src="https://tistory4.daumcdn.net/tistory/3134841/skin/images/confetti_v2.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.css">
 
         <!-- KaTeX JavaScript 파일 추가 -->
@@ -26,6 +30,17 @@
         <meta name="viewport" content="width=device-width" />
     </head>
     <body>
+        <!-- 꽃가루-->
+        <!-- is-hidden class : bulma css -->
+
+        <!--
+        <div class="buttonContainer is-hidden">
+            <button class="canvasBtn" id="stopButton">Stop Confetti</button>
+            <button class="canvasBtn" id="startButton">Drop Confetti</button>
+        </div>
+        -->
+
+
         <!--position: absolute 빼고 relative 로 모두 변경, 그 뒤 위치 조정 디스코드에 올려주신 거 토대로 투명 배경 설정, 배경 스타일 제작 -->
         <div class="container">
             <div class="pb_board">
@@ -34,7 +49,8 @@
             <div class="score"><b>SCORE: <span>00</span></b></div>
             <div class="timer"><b>TIME : <span>60</span></b></div>
             <br>
-            <br>
+            <b class="fever">FEVER TIME</b>
+            <progress value="90" max="15" id="fever"></progress>
             <br>
 
             <div class="board">
@@ -210,5 +226,7 @@
 
         <div class="cursor"></div>
         <script src="./main.js"></script>
+
+
     </body>
 </html>

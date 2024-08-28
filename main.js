@@ -27,9 +27,12 @@ const isTouchDevice = (navigator.maxTouchPoints || 'ontouchstart' in document.do
 
 const intro_ui = document.getElementById("intro_ui")
 const fin_ui = document.getElementById("fin_ui")
+const FEVERTIME = document.getElementById('fever')
 
+const startB = document.getElementById('startButton')
+const stopB = document.getElementById('stopButton')
 
-
+let fever = 0
 let score = 0
 let answer = 0 
 let mole_condition = new Array(holes.length).fill('')
@@ -51,6 +54,7 @@ let params={}
 let pb_wrong_ans=0
 let pb_wrong_answer_tiems=3
 let user_info_ready = 0
+let fever_value=0;
 let record_style={
     "category":"",
     "problem":"",
@@ -338,7 +342,52 @@ function linear_func_create(a,b){
     }
 }
 
-function new_pb(){
+
+
+/* $.ajax({
+
+    type: "POST",
+    url: "/sign_up/save",
+    data: {},
+    success: function (response) {
+        if (response['result'] == 'success') {
+            reAction(); //꽃가루   
+        }
+    }
+});
+
+
+
+
+function reAction() {
+    $("#startButton").trigger("click");
+    setTimeout(function () {
+        $("#stopButton").trigger("click");
+    }, 5000);
+}
+
+ */
+/* 
+function reAction() {
+    $("#startButton").trigger("click");
+    setTimeout(function () {
+        $("#stopButton").trigger("click");
+    }, 5000);
+}
+ */
+function new_pb(pb_wrong_ans){
+
+    // fever 관련 코드
+    /* if(pb_wrong_ans==-2 || pb_wrong_ans==-1){
+        FEVERTIME.value='0';
+    }else{
+        fever_value = (parseInt(FEVERTIME.value,10) + (3-pb_wrong_ans));
+        FEVERTIME.value = fever_value.toString();
+        if(fever_value>=3){
+            console.log('!@#!@#!@#')
+            reAction();
+        }
+    } */
 
     /*
     수열 문제 유형
@@ -727,7 +776,7 @@ function pb_create(){
                     // a
                     // a = (ce+d-b)/e
                     // e*alpha = d-b, b = d - e*alpha
-                    e = abs(e)
+                    if(e==0)e++
                     let alpha = rand(-3,3)
                     let d = rand(-3,3)
                     let b = d - e*alpha
@@ -844,9 +893,9 @@ function new_ans(i){
         /*not answer*/
         let wrong_answer=0;
         if(rand(1,2)===1){
-            wrong_answer=rand(answer-5,answer-1)
+            wrong_answer=rand(answer-4,answer-1)
         }else{
-            wrong_answer=rand(answer+1,answer+5)
+            wrong_answer=rand(answer+1,answer+4)
         }
         mole_ans[i]=wrong_answer
         percent[0]++
@@ -930,7 +979,7 @@ function game_start(){
         "user_answers":""
     }
 
-    new_pb()
+    new_pb(-2)
     for(var i=0;i<holes.length;i++){
         hole_out[i]=0
         pd_mole(i)
@@ -1091,6 +1140,7 @@ function run(i){
                 //console.log(mole_ans[i],answer,mole_ans[i]==answer,mole_ans[i]===answer)
                 if(mole_ans[i]===answer){
                     score += problem_score[0]
+                    pb_wrong_ans+=wrong_pb_cnt
                     correct_pb_cnt++
                     record_style["user_answers"]+="ac" // correct
                     game_record.push(record_style)
@@ -1101,17 +1151,19 @@ function run(i){
                         "problem_answer":"",
                         "user_answers":""
                     }
+                    let imsi=pb_wrong_ans
                     pb_wrong_ans=0
-                    new_pb()
+
+                    new_pb(misi)
                     update_percent(answer)
                     correct_answer=1
                 }else {
                     score += problem_score[1]
                     wrong_pb_cnt++
-                    pb_wrong_ans++
                     record_style["user_answers"]+=String(mole_ans[i])+","
                     if(pb_wrong_ans>=pb_wrong_answer_tiems+1){
                         record_style["user_answers"]+="wa" // wrong
+                        pb_wrong_ans+=wrong_pb_cnt
                         game_record.push(record_style)
                         record_style={
                             "category":"",
@@ -1120,7 +1172,7 @@ function run(i){
                             "user_answers":""
                         }
                         pb_wrong_ans=0
-                        new_pb()
+                        new_pb(-1)
                         update_percent(answer)
                     }
                 }
