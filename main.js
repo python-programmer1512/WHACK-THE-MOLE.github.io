@@ -705,7 +705,7 @@ function pb_create(){
 
             // https://namu.wiki/w/%EB%82%98%EB%AC%B4%EC%9C%84%ED%82%A4:%EB%AC%B8%EB%B2%95%20%EB%8F%84%EC%9B%80%EB%A7%90/%EC%8B%AC%ED%99%94/TeX
 
-            rdm=rand(1,3)
+            rdm=rand(1,4)
             problem=""
 
             if(rdm==1){ // 1. 정수로 갈때 극한 값 찾기(1,2차, 유리함수는 보류) (명칭 : 극한값 찾기(정수))
@@ -776,7 +776,7 @@ function pb_create(){
                     // a
                     // a = (ce+d-b)/e
                     // e*alpha = d-b, b = d - e*alpha
-                    if(e==0)e++
+                    if(e==0)e=e+1
                     let alpha = rand(-3,3)
                     let d = rand(-3,3)
                     let b = d - e*alpha
@@ -817,6 +817,44 @@ function pb_create(){
                 record_style["category"]="조건 나눠서 미지수 찾기"
                 problem_score=[5,-2]
     
+            }else if(rdm==4){
+                // 샌드위치
+                //console.log('new!!')
+                let ran=(1,1)
+                let ans = rand(-25,25)
+                if(ran==1){
+                    // ->a
+                    let k = rand(-4,4)
+                    if(k==0){
+                        k+=rand(1,3)
+                    }
+                    alpha = Math.floor(ans/k)
+                    let a=[alpha+rand(-2,2),alpha+rand(-2,2)]
+                    let b=[ans-a[0]*k,ans-a[1]*k]
+
+
+                    //linear_func_create(a[0],b[0]) + "< f(x) < " + linear_func_create(a[1],b[1]) + "\; \\lim\\limits_{x \\to "+(k)+"} = {?}"
+                    problem=linear_func_create(a[0],b[0]) + "< f(x) < " + linear_func_create(a[1],b[1]) + "\\\\ \\lim\\limits_{x \\to "+(k)+"} f(x) = {?}"
+
+                    record_style["category"]="샌드위치 정리(a)"
+
+
+                }else if(ran==2){
+                    // -> infi
+
+                    record_style["category"]="샌드위치 정리(inf)"
+
+                }
+
+
+                answer=ans
+
+                problem_score=[3,-2]
+
+            }else if(rdm==5){
+                // 사칙 연산
+            }else if(rdm==6){
+                // 인수분해
             }
         }
 
@@ -1154,7 +1192,7 @@ function run(i){
                     let imsi=pb_wrong_ans
                     pb_wrong_ans=0
 
-                    new_pb(misi)
+                    new_pb(imsi)
                     update_percent(answer)
                     correct_answer=1
                 }else {
@@ -1222,7 +1260,7 @@ function run(i){
                 },()=>{})
             });
 
-        }, rand(1800,2200))
+        }, rand(1800,2000))
 
     }, rand(1000,2000))
 
