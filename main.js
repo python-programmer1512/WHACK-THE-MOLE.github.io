@@ -873,6 +873,7 @@ function pb_create(){
 
                 problem="{\\begin{cases}"+ linear_func_create(a,k)+ " & (x<"+e+") \\\\ " +linear_func_create(c,d) +" & (x>"+e+") \\end{cases}} \\lim\\limits_{x \\to "+e+"} = {f(a)} \\\\  {f(a)} = {?}"
                 
+                record_style["category"]="극한 = 함숫값"
                 problem_score=[2,-1]
                 
             }else if(rdm==2){
@@ -898,6 +899,7 @@ function pb_create(){
                     }
                     problem = "\\lim\\limits_{x \\to "+rand(-100,100)+"}" + " = " + k + ", \\\\ {f(x)} = " + fn + ", \\; {f(x)} = {?}"
                     problem_score=[1,-1]
+                    record_style["category"]="다항함수에서 함숫값 찾기"
 
 
                 }
@@ -928,6 +930,7 @@ function pb_create(){
                         problem = problem + "\\text{최솟값} = {?}"
                         answer=mn
                     }
+                    record_style["category"]="다항함수의 최대 최소"
 
                 }else{
                     // left
