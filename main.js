@@ -857,7 +857,7 @@ function pb_create(){
                 // 인수분해
             }
         }else if(category=="연속"){
-            rdm=rand(4,4)
+            rdm=rand(1,3)
             problem=""
 
             if(rdm==1){
@@ -903,9 +903,9 @@ function pb_create(){
 
 
                 }
-            }else if(rdm==3){
-                // f(x+p)=f(x)
             }else if(rdm==4){
+                // f(x+p)=f(x)
+            }else if(rdm==3){
                 // mx, mn
                 ran=rand(1,1)
                 
