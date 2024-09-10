@@ -857,7 +857,7 @@ function pb_create(){
                 // 인수분해
             }
         }else if(category=="연속"){
-            rdm=rand(1,3)
+            rdm=rand(1,1)
             problem=""
 
             if(rdm==1){
@@ -871,7 +871,7 @@ function pb_create(){
                 let k = c*e+d-a*e
                 answer = c*e+d
 
-                problem="{\\begin{cases}"+ linear_func_create(a,k)+ " & (x<"+e+") \\\\ " +linear_func_create(c,d) +" & (x>"+e+") \\end{cases}} \\lim\\limits_{x \\to "+e+"} = {f(a)} \\\\  {f(a)} = {?}"
+                problem="{\\begin{cases}"+ linear_func_create(a,k)+ " & (x<"+e+") \\\\ " +linear_func_create(c,d) +" & (x>"+e+") \\end{cases}} \\lim\\limits_{x \\to "+e+"} {f(x)} = {f("+e+")} \\\\  {f("+e+")} = {?}"
                 
                 record_style["category"]="극한 = 함숫값"
                 problem_score=[2,-1]
