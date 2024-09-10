@@ -856,6 +856,89 @@ function pb_create(){
             }else if(rdm==6){
                 // 인수분해
             }
+        }else if(category=="연속"){
+            rdm=rand(4,4)
+            problem=""
+
+            if(rdm==1){
+                // lim = f(a)
+
+                let e = rand(-5,5)
+
+                let a = rand(-3,3)
+                let c = rand(-3,3)
+                let d = rand(-3,3)
+                let k = c*e+d-a*e
+                answer = c*e+d
+
+                problem="{\\begin{cases}"+ linear_func_create(a,k)+ " & (x<"+e+") \\\\ " +linear_func_create(c,d) +" & (x>"+e+") \\end{cases}} \\lim\\limits_{x \\to "+e+"} = {f(a)} \\\\  {f(a)} = {?}"
+                
+                problem_score=[2,-1]
+                
+            }else if(rdm==2){
+                // lim = k, f(x) = ax^n ~ , f(a) = ?
+                let ran=rand(1,1)
+                if(ran==1){
+                    let k = rand(-20,20)
+                    answer=k
+                    let fn = ""
+                    let n = rand(2,5)
+                    for(let i = 0;i<=n;i++){
+
+                        fn=fn+String.fromCharCode(97+i)
+                        if(i!=n){
+                            if(n-i==1){
+                                fn=fn+"x"
+                            }else{
+                                fn=fn+"x^"+(n-i)
+                            }
+                            fn = fn+"+"
+                        }
+                
+                    }
+                    problem = "\\lim\\limits_{x \\to "+rand(-100,100)+"}" + " = " + k + ", \\\\ {f(x)} = " + fn + ", \\; {f(x)} = {?}"
+                    problem_score=[1,-1]
+
+
+                }
+            }else if(rdm==3){
+                // f(x+p)=f(x)
+            }else if(rdm==4){
+                // mx, mn
+                ran=rand(1,1)
+                
+                if(ran==1){
+                    // right
+                    let left = rand(-2,2)
+                    let right = rand(left+1,left+3)
+                    let a = rand(-4,4)
+                    let b = rand(-4,4)
+                    let mx=max(a*left+b,a*right+b)
+                    let mn=min(a*left+b,a*right+b)
+
+                    let rnd=rand(1,2)
+                    problem = "["+left+","+right+"], \\; y = "+linear_func_create(a,b)+", \\; "
+                    problem_score=[2,-1]
+                    if(rnd==1){
+                        //max
+                        problem = problem + "\\text{최댓값} = {?}"
+                        answer=mx
+                    }else{
+                        // min
+                        problem = problem + "\\text{최솟값} = {?}"
+                        answer=mn
+                    }
+
+                }else{
+                    // left
+                }
+
+                
+            }
+
+        }else if(category=="미분"){
+            rdm=rand(1,4)
+            problem=""
         }
 
     }else{
