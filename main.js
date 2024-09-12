@@ -1091,7 +1091,7 @@ function pb_create(){
                 
 
 
-                problem = "\\lim\\limits_{x \\to "+(-b)+"}\\frac{"+fn+"}{"+linear_func_create(1,b)+"} = "+b + "\\quad"
+                problem = "\\lim\\limits_{x \\to "+(-b)+"}\\frac{"+fn+"}{"+linear_func_create(1,b)+"} = "+b + " \\quad"
                 
                 let rdn=rand(1,5)
                 if(rdn==1){
