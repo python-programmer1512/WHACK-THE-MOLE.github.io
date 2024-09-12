@@ -1095,19 +1095,19 @@ function pb_create(){
                 
                 let rdn=rand(1,5)
                 if(rdn==1){
-                    problem += " f^\\prime(x) = {?}"
+                    problem += " f^\\prime("+(-b)+") = {?}"
                     answer = b
                 }else if(rdn==2){
-                    problem += " f(x) = {?}"
+                    problem += " f("+(-b)+") = {?}"
                     answer = -a
                 }else if(rdn==3){
-                    problem += " f^\\prime(x)f(x) = {?}"
+                    problem += " f^\\prime("+(-b)+")f("+(-b)+") = {?}"
                     answer = (-a)*b
                 }else if(rdn==4){
-                    problem += " f^\\prime(x) + f(x) = {?}"
+                    problem += " f^\\prime("+(-b)+") + f("+(-b)+") = {?}"
                     answer = (-a)+b
                 }else if(rdn==5){
-                    problem += " f^\\prime(x) - f(x) = {?}"
+                    problem += " f^\\prime("+(-b)+") - f("+(-b)+") = {?}"
                     answer = (-a)-b
                 }
 
