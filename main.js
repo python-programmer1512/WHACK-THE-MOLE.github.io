@@ -857,6 +857,7 @@ function pb_create(){
                 // 인수분해
             }
         }else if(category=="연속"){
+            // http://127.0.0.1:5501/?token=20402&type=%EA%B7%B9%ED%95%9C&school=%EC%9A%B4%ED%98%B8%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90
             rdm=rand(1,1)
             problem=""
 
@@ -940,8 +941,181 @@ function pb_create(){
             }
 
         }else if(category=="미분"){
+            // http://127.0.0.1:5501/?token=20402&type=%EA%B7%B9%ED%95%9C&school=%EC%9A%B4%ED%98%B8%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90
             rdm=rand(1,4)
             problem=""
+            if(rdm==1){
+                // f(x) 미분
+                
+                let fn=""
+                let a=rand(-4,4)
+                if(a==0){
+                    a=a+1
+                }
+                let b=rand(-4,4)
+                let c=rand(-4,4)
+                let x=rand(-5,5)
+                if(a==1){
+                    fn="x^2"
+                }else if(a==-1){
+                    fn="-x^2"
+                }else{
+                    fn=a.toString()+"x^2"
+                }
+                if(b<0){
+                    if(b==-1){
+                        fn+=" -x"
+                    }else{
+                        fn+=" - " + (-b) + "x"
+                    }
+                }else if(b>0){
+                    if(b==1){
+                        fn+=" + x"
+
+                    }else{
+                        fn+=" + " + b + "x"
+                    }
+                }
+                if(c<0){
+                    fn+=" - " + (-c)
+                }else if(c>0){
+                    fn+=" + " + c
+                }
+
+                answer = 2*a*x+b
+
+                problem = "{f(x)} = "+fn + "\\\\ f^\\prime ("+x+") = {?}"
+
+                problem_score=[2,-1]
+                record_style["category"]="함수 미분값 구하기"
+
+
+            }else if(rdm==2){
+                // 순간 변화율(일반식)
+
+                let fprime = rand(-5,5)
+                let a = rand(-10,10)
+                let b = rand(-10,10)
+                answer = (a-b)*fprime
+
+                let fn = "\\lim\\limits_{h \\to 0} \\frac {f(x"
+                if(a==1){
+                    fn+="+h)-f(x"
+                }else if(a==-1){
+                    fn+="-h)-f(x"
+                }else{
+                    if(a>0){
+                        fn+="+"+a.toString()+"h)-f(x"
+                    }else if(a<0){
+                        fn+="-"+(-a).toString()+"h)-f(x"
+                    }else{
+                        fn+=")}-f(x"
+                    }
+                }
+                if(b==1){
+                    fn+="+h)} {h}"
+                }else if(b==-1){
+                    fn+="-h)} {h}"
+                }else{
+                    if(b>0){
+                        fn+="+"+b.toString()+"h)} {h}"
+                    }else if(b<0){
+                        fn+="-"+(-b).toString()+"h)} {h}"
+                    }else{
+                        fn+="h)} {h}"
+                    }
+                }
+                //+"h)-f(x)} {h} = f^\\prime (x)"
+
+                problem = "f^\\prime (x) = "+fprime + "\\quad"+fn+" = {?}"+"\\\\ \\text{f(x)는 미분 가능 함수} "
+
+                problem_score=[2,-1]
+                record_style["category"]="순간변화율(일반식)"
+
+
+            }else if(rdm==3){
+                // 순간변화율 변형(h무한)
+                let fprime = rand(-5,5)
+                let a = rand(-10,10)
+                let b = rand(-10,10)
+                answer = (a-b)*fprime
+
+                let fn = "\\lim\\limits_{h \\to \\infty} h(f(x"
+                if(a==1){
+                    fn+="+\\frac{1}{h})-f(x"
+                }else if(a==-1){
+                    fn+="-\\frac{1}{h})-f(x"
+                }else{
+                    if(a>0){
+                        fn+="+"+"\\frac{"+a.toString()+"}{h})-f(x"
+                    }else if(a<0){
+                        fn+="-"+"\\frac{"+(-a).toString()+"}{h})-f(x"
+                    }else{
+                        fn+=")-f(x"
+                    }
+                }
+                if(b==1){
+                    fn+="+\\frac{1}{h})}"
+                }else if(b==-1){
+                    fn+="-\\frac{1}{h})}"
+                }else{
+                    if(b>0){
+                        fn+="+"+"\\frac{"+b.toString()+"}{h}))"
+                    }else if(b<0){
+                        fn+="-"+"\\frac{"+(-b).toString()+"}{h}))"
+                    }else{
+                        fn+="))"
+                    }
+                }
+                //+"h)-f(x)} {h} = f^\\prime (x)"
+
+                problem = "f^\\prime (x) = "+fprime + "\\quad"+fn+" = {?}"+"\\\\ \\text{f(x)는 미분 가능 함수} "
+
+                problem_score=[3,-1]
+                record_style["category"]="순간변화율 변형(h무한)"
+            }else if(rdm==4){
+                // 일반 식 (f(x)-a)/(x-b) = c
+
+
+                let a = rand(-5,5)
+                let b = rand(-5,5)
+                let fn=""
+                if(a<0){
+                    fn = "{f(x)}-"+(-a)
+                }else if(a>0){
+                    fn = "{f(x)}+"+(a)
+                }else{
+                    fn = "{f(x)}"
+                }
+
+                
+
+
+                problem = "\\lim\\limits_{x \\to "+(-b)+"}\\frac{"+fn+"}{"+linear_func_create(1,b)+"} = "+b + "\\quad"
+                
+                let rdn=rand(1,5)
+                if(rdn==1){
+                    problem += " f^\\prime(x) = {?}"
+                    answer = b
+                }else if(rdn==2){
+                    problem += " f(x) = {?}"
+                    answer = -a
+                }else if(rdn==3){
+                    problem += " f^\\prime(x)f(x) = {?}"
+                    answer = (-a)*b
+                }else if(rdn==4){
+                    problem += " f^\\prime(x) + f(x) = {?}"
+                    answer = (-a)+b
+                }else if(rdn==5){
+                    problem += " f^\\prime(x) - f(x) = {?}"
+                    answer = (-a)-b
+                }
+
+                problem_score=[2,-1]
+                record_style["category"]="일반 식 (f(x)-a)/(x-b) = c"
+
+
+            }
         }
 
     }else{
