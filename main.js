@@ -1009,7 +1009,7 @@ function pb_create(){
                     }else if(a<0){
                         fn+="-"+(-a).toString()+"h)-f(x"
                     }else{
-                        fn+=")}-f(x"
+                        fn+=")-f(x"
                     }
                 }
                 if(b==1){
@@ -1022,7 +1022,7 @@ function pb_create(){
                     }else if(b<0){
                         fn+="-"+(-b).toString()+"h)} {h}"
                     }else{
-                        fn+="h)} {h}"
+                        fn+=")} {h}"
                     }
                 }
                 //+"h)-f(x)} {h} = f^\\prime (x)"
@@ -1110,6 +1110,8 @@ function pb_create(){
                     problem += " f^\\prime(x) - f(x) = {?}"
                     answer = (-a)-b
                 }
+
+                problem += " \\\\ f(x)는 미분 가능 함수"
 
                 problem_score=[2,-1]
                 record_style["category"]="일반 식 (f(x)-a)/(x-b) = c"
