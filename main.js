@@ -1111,7 +1111,7 @@ function pb_create(){
                     answer = (-a)-b
                 }
 
-                problem += " \\\\ f(x)는 미분 가능 함수"
+                problem += " \\\\ \\text{f(x)는 미분 가능 함수}"
 
                 problem_score=[2,-1]
                 record_style["category"]="일반 식 (f(x)-a)/(x-b) = c"
