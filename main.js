@@ -858,7 +858,7 @@ function pb_create(){
             }
         }else if(category=="연속"){
             // http://127.0.0.1:5501/?token=20402&type=%EA%B7%B9%ED%95%9C&school=%EC%9A%B4%ED%98%B8%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90
-            rdm=rand(1,1)
+            rdm=rand(1,3)
             problem=""
 
             if(rdm==1){
