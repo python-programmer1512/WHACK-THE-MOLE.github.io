@@ -1069,7 +1069,7 @@ function pb_create(){
                 }
                 //+"h)-f(x)} {h} = f^\\prime (x)"
 
-                problem = "f^\\prime (x) = "+fprime + "\\quad"+fn+" = {?}"+"\\\\ \\text{f(x)는 미분 가능 함수} "
+                problem = "f^\\prime (x) = "+fprime + " \\quad "+fn+" = {?}"+" \\\\ \\text{f(x)는 미분 가능 함수} "
 
                 problem_score=[3,-1]
                 record_style["category"]="순간변화율 변형(h무한)"
