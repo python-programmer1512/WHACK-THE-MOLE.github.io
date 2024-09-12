@@ -1055,9 +1055,9 @@ function pb_create(){
                     }
                 }
                 if(b==1){
-                    fn+="+\\frac{1}{h})}"
+                    fn+="+\\frac{1}{h}))"
                 }else if(b==-1){
-                    fn+="-\\frac{1}{h})}"
+                    fn+="-\\frac{1}{h}))"
                 }else{
                     if(b>0){
                         fn+="+"+"\\frac{"+b.toString()+"}{h}))"
