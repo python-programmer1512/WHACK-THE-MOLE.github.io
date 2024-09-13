@@ -898,7 +898,8 @@ function pb_create(){
                         }
                 
                     }
-                    problem = "\\lim\\limits_{x \\to "+rand(-100,100)+"}" + "{f(x)} = " + k + ", \\\\ {f(x)} = " + fn + ", \\; {f(x)} = {?}"
+                    let xto=rand(-100,100)
+                    problem = "\\lim\\limits_{x \\to "+xto+"}" + "{f(x)} = " + k + ", \\\\ {f(x)} = " + fn + ", \\; {f("+xto+")} = {?}"
                     problem_score=[1,-1]
                     record_style["category"]="다항함수에서 함숫값 찾기"
 
