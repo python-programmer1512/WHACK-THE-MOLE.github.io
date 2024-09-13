@@ -1105,10 +1105,10 @@ function pb_create(){
                     answer = (-a)*b
                 }else if(rdn==4){
                     problem += " f^\\prime("+(-b)+") + f("+(-b)+") = {?}"
-                    answer = (-a)+b
+                    answer = b+(-a)
                 }else if(rdn==5){
                     problem += " f^\\prime("+(-b)+") - f("+(-b)+") = {?}"
-                    answer = (-a)-b
+                    answer = b-(-a)
                 }
 
                 problem += " \\\\ \\text{f(x)는 미분 가능 함수}"
