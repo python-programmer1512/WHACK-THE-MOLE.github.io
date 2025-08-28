@@ -71,7 +71,7 @@ let correct = new Audio('./audio/correct.mp3');
 let problem_list = []
 
 
-const domain = "https://mathgame.bass9030.dev" //"http://127.0.0.1:8000"//
+const domain = "http://127.0.0.1:8000" //"http://127.0.0.1:8000"//https://mathgame.bass9030.dev//
 
 function abs(a){
     if(a<0)return -a
