@@ -23,7 +23,9 @@ const final_score = document.querySelector('.final-score span')
 const TIMER=document.querySelector('.timer span')
 const PB=document.getElementById('problem')
 const game_start_button = document.getElementById("start-img-button")
-const isTouchDevice = (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement);
+//const isTouchDevice = (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement);
+const isTouchDevice = !matchMedia('(hover: hover) and (pointer: fine)').matches;
+console.log("#",isTouchDevice)
 
 const intro_ui = document.getElementById("intro_ui")
 const fin_ui = document.getElementById("fin_ui")
